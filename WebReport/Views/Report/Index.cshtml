@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+@{
+System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+serializer.MaxJsonLength = Int32.MaxValue;
+}
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Loading from inline datasource</title>
+		<link rel="stylesheet" href="@Url.Content("~/Scripts/webix/codebase/webix.css")" type="text/css" charset="utf-8">
+        <link rel="stylesheet" href="@Url.Content("~/Scripts/webix/codebase/pivot.css")" type="text/css" charset="utf-8">
+		<script src="@Url.Content("~/Scripts/webix/codebase/webix.js")"  charset="utf-8" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/webix/codebase/pivot.js")" charset="utf-8" type="text/javascript"></script>
+        @*<script src="../../codebase/webix.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../codebase/pivot.js" type="text/javascript" charset="utf-8"></script>*@
+
+		<link rel="stylesheet" href="@Url.Content("~/Scripts/webix/css/samples.css")" type="text/css" charset="utf-8">
+
+		@*<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>*@
+
+         
+	</head>
+	<body>
+		<div class='header_comment'>Loading from inline datasource</div>
+		<div id="testA"></div>
+
+        <style type="text/css">
+            html, body {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+        
+		<script type="text/javascript" charset="utf-8">
+		    //var pivot_dataset = '@Url.Action("testData", "Report")';
+		    //var pivot_dataset = null;
+		    var pivot_dataset = '@Url.Action("testData", "Report")';
+		   
+		    webix.ready(function () {
+		        grida = new webix.ui({
+		            container: "testA",
+		            view: "pivot",
+		            fieldMap: { "BranchK": "สาขา", "RegionDesc": "ภาค", "Region": "รหัสภาค", "Dept": "สายงาน", "Counts": "จำนวน", "TypeLateMax": "ประเทถการจ่ายเงิน" },
+                    max: true,
+		            //height: 800,
+		            autoheight: true,
+		            height: 800,
+		            autoheight: true,
+                    width: 1000,
+		            url: pivot_dataset,
+		            label: "ทะเบียนค้างครับ ณ xxxx",
+		            //data: pivot_dataset,
+		            structure: {
+		                rows: ["BranchK", "Region"],
+		                columns: ["TypeLateMax"],
+		                values: [{ name: "counts", operation: "sum",lable:"ทดสอบ" }],
+		                filters: []
+		            },
+                    ready: function () {
+		                var grid = this.$$("data");
+		                //define coloring rules for the first column
+		                grid.config.columns[1].cssFormat = function (value) { if (value < 10) return "webix_min"; }
+		                grid.refresh();
+		                console.log(grid);
+		            }
+		        });
+		    });
+		</script>
+        @ViewBag.JsonResult
+	</body>
+</html>
