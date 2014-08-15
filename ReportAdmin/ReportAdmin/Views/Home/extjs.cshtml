@@ -1,0 +1,50 @@
+﻿<script src="@Url.Content("~/App/views/admin/MappingCodeEQP.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/views/admin/ListReportForm.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/model/common/CommonModel.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    Ext.Loader.setConfig({ enabled: true });
+    Ext.Loader.setPath('Ext.ux', '@Url.Content("~/Scripts/extjs/ux")');
+    Ext.require(['*']);
+    Ext.QuickTips.init();
+    //bline report 
+    window.gridReportData = '@Url.Action("GriDReport", "Home")';
+
+
+
+
+    /*
+        Register Tabs
+    */
+    var MappingCodeEQPTab = new MappingCodeEQPForm({ id: 'MappingCodeEQPForm', region: 'north' });
+    var ListReportTab = new ListReportForm({ id: 'ListReportForm', region: 'north' });
+    /*
+    *   
+    */
+    //add tabls
+    var tabItems = [];
+    tabItems.push(MappingCodeEQPTab);
+    tabItems.push(ListReportTab);
+
+    //set Main Display
+    var viewport = Ext.create('Ext.Viewport', {
+        id: 'viewport',
+        layout: 'border',
+        items: [
+                    {
+                        xtype: 'panel',
+                        region: 'north',
+                        height: 25, // give north and south regions a height
+                        title: 'KTB [ ' + 'currentUser' + ' : ' + 'CurrentUserRole'
+                                + ' ]<a href=' + 'actionLogoff' + ' style="font-family:verdana;font-size:12px;color:red;text-decoration: none;">   Logoff</a>'
+                    },
+                    {
+                        xtype: 'tabpanel',
+                        region: 'center',
+                        items: tabItems
+                    }
+            ]
+    });
+
+</script>
+

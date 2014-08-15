@@ -42,8 +42,21 @@
   <ItemGroup>
     <Compile Include="Batchtb.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="MasterAssetType.cs" />
+    <Compile Include="MasterDepartment.cs" />
+    <Compile Include="MasterMappingCodeEQP.cs" />
+    <Compile Include="MasterRegion.cs" />
+    <Compile Include="MasterSection.cs" />
+    <Compile Include="Page\Child.cs" />
+    <Compile Include="Page\Child2.cs" />
+    <Compile Include="Page\MappingCodeEQPDomain.cs" />
+    <Compile Include="Page\RootObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositoy\Class1.cs" />
+    <Compile Include="Repositoy\IMasterMappingCodeEQPMapRepository.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="Repositoy\IMasterProvinceRepositoryRepository.cs" />
+    <Compile Include="Repositoy\IReportRepository.cs" />
+    <Compile Include="Repositoy\IMasterAssetTypeRepository.cs" />
     <Compile Include="Repositoy\IBatchtbRepository.cs" />
     <Compile Include="RPT001Domain.cs" />
   </ItemGroup>

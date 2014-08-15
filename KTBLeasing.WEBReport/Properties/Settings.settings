@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KTBLeasing.WEBReport.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DatabaseServer" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">221.23.0.25</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">sa</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ktblitadmin</Value>
+    </Setting>
+    <Setting Name="DatabaseName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">BatchTB</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

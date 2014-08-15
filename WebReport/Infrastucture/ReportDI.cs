@@ -17,7 +17,7 @@ using KTBLeasing.Domain.Repositoy;
 
 
 
-namespace MvcApplication1.Infrastucture
+namespace WebReport.Infrastucture
 {
     public static class ReportDI
     {

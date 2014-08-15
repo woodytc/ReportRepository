@@ -1,0 +1,74 @@
+﻿@*Tabs views*@
+<script src="@Url.Content("~/App/views/admin/MappingCodeEQP.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/views/admin/ListReportForm.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/views/admin/ManageReportFrom.js")" type="text/javascript"></script>
+
+@*Windows Manage*@
+<script src="@Url.Content("~/App/views/windows/EditManageReportWindow.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/views/windows/MainReportWindow.js")" type="text/javascript"></script>
+
+
+@*Model*@
+<script src="@Url.Content("~/App/model/MasterMappingCodeEQPModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/model/ReportModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/App/model/common/CommonModel.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    Ext.Loader.setConfig({ enabled: true });
+    Ext.Loader.setPath('Ext.ux', '@Url.Content("~/Scripts/extjs/ux")');
+    Ext.require(['*']);
+    Ext.QuickTips.init();
+    
+    //Report format {'function', controllername} 
+    window.gridReportData = '@Url.Action("GridReport", "Home")';
+
+    window.URLGridReport = '@Url.Action("GridReport", "Home")';
+
+    window.URLCreateReport = '@Url.Action("CreateReport", "Home")';
+
+    /*
+    Register Tabs
+    */
+    var MappingCodeEQPTab = new MappingCodeEQPForm({ id: 'MappingCodeEQPForm', region: 'north' });
+    var ListReportTab = new ListReportForm({ id: 'ListReportForm', region: 'north' });
+    var ManageReportTab = new ManageReportFrom({ id: 'ManageReportFrom', region: 'north' })
+    /*
+    *   
+    */
+    //add tabls
+    var tabItems = [];
+    tabItems.push(ManageReportTab);
+    tabItems.push(MappingCodeEQPTab);
+    
+    tabItems.push(ListReportTab);
+    
+
+    //set Main Display
+    var viewport = Ext.create('Ext.Viewport', {
+        id: 'viewport',
+        layout: 'border',
+        //padding: 0,
+        //width: '100%',
+        border: true,
+        items: [
+                    {
+                        xtype: 'panel',
+                        region: 'north',
+//                        layout: 'anchor',
+//                        height: 25,
+                        width:'100%',
+                        title: 'KTB [ ' + 'currentUser' + ' : ' + 'CurrentUserRole'
+                                + ' ]<a href=' + 'actionLogoff' + ' style="font-family:verdana;font-size:12px;color:red;text-decoration: none;">   Logoff</a>'
+                    },
+                    {
+                        xtype: 'tabpanel',
+                        region: 'center',
+                        layout: 'anchor',
+                        items: tabItems
+                    }
+            ]
+    });
+
+</script>
+

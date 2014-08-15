@@ -1,0 +1,61 @@
+﻿<script>
+    var myTabbar;
+    function doOnLoad() {
+//        myTabbar = new dhtmlXTabBar("my_tabbar");
+//        myTabbar.addTab("a1", "Tab 1-1", null, null, true);
+//        myTabbar.addTab("a2", "Tab 1-2");
+//        myTabbar.addTab("a3", "Tab 1-3");
+//        myTabbar.addTab("a4", "Tab 1-4");
+//        myTabbar.addTab("a5", "Tab 1-5");
+//        myTabbar.enableAutoReSize(true);
+//        myTabbar.tabs("a1").attachLayout("2E");
+        //        //myTabbar.cells("a1").attachHTMLString("Just set sizes of container to 100% to achieve auto-sizing. <br> Resize window to see the effect.")
+
+
+        var main_layout = new dhtmlXLayoutObject("my_tabbar", '1C');
+
+        var a = main_layout.cells('a');
+        var tabbar_2 = a.attachTabbar();
+        tabbar_2.addTab('tab_2', 'tab_2');
+        var tab_2 = tabbar_2.cells('tab_2');
+        tab_2.setActive();
+        var layout_2 = tab_2.attachLayout('2E');
+
+        var cell_5 = layout_2.cells('a');
+        var form_3 = cell_5.attachForm();
+        form_3.loadStruct('./data/form.xml');
+
+
+
+
+        var cell_6 = layout_2.cells('b');
+        var grid_2 = cell_6.attachGrid();
+        grid_2.setIconsPath('./codebase/imgs/');
+
+        grid_2.setHeader(["Column 1", "Column 2"]);
+        grid_2.setColTypes("ro,ro");
+
+        grid_2.setColSorting('str,str');
+        grid_2.setInitWidths('*,*');
+        grid_2.init();
+        grid_2.attachFooter(["<div id='grid_2_recinfoArea' style='width:100%;height:100%'></div>", "#cspan"], ['height:25px;text-align:left;background:transparent;border-color:white;padding:0px;']);
+        grid_2.enablePaging(true, 6, 3, 'grid_2_recinfoArea');
+        grid_2.setPagingSkin('toolbar', 'dhx_skyblue');
+      //  grid_2.load('./data/grid.xml', 'xml');
+
+
+
+
+
+
+        tabbar_2.addTab('tab_3', 'tab_3');
+        var tab_3 = tabbar_2.cells('tab_3');
+
+
+        tabbar_2.addTab('tab_4', 'tab_4');
+        var tab_4 = tabbar_2.cells('tab_4');
+
+    }
+	</script>
+
+    <div id="my_tabbar" style="width: 100%; height: 700px;"></div>

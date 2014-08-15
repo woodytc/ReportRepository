@@ -14,14 +14,9 @@ serializer.MaxJsonLength = Int32.MaxValue;
         <link rel="stylesheet" href="@Url.Content("~/Scripts/webix/codebase/pivot.css")" type="text/css" charset="utf-8">
 		<script src="@Url.Content("~/Scripts/webix/codebase/webix.js")"  charset="utf-8" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/webix/codebase/pivot.js")" charset="utf-8" type="text/javascript"></script>
-        @*<script src="../../codebase/webix.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../codebase/pivot.js" type="text/javascript" charset="utf-8"></script>*@
-
+       
 		<link rel="stylesheet" href="@Url.Content("~/Scripts/webix/css/samples.css")" type="text/css" charset="utf-8">
-
-		@*<script src="../common/testdata.js" type="text/javascript" charset="utf-8"></script>*@
-
-         
+ 
 	</head>
 	<body>
 		<div class='header_comment'>Loading from inline datasource</div>
@@ -42,33 +37,39 @@ serializer.MaxJsonLength = Int32.MaxValue;
 		    var pivot_dataset = '@Url.Action("testData", "Report")';
 		   
 		    webix.ready(function () {
-		        grida = new webix.ui({
-		            container: "testA",
-		            view: "pivot",
-		            fieldMap: { "BranchK": "สาขา", "RegionDesc": "ภาค", "Region": "รหัสภาค", "Dept": "สายงาน", "Counts": "จำนวน", "TypeLateMax": "ประเทถการจ่ายเงิน" },
-                    max: true,
-		            //height: 800,
-		            autoheight: true,
-		            height: 800,
-		            autoheight: true,
-                    width: 1000,
-		            url: pivot_dataset,
-		            label: "ทะเบียนค้างครับ ณ xxxx",
-		            //data: pivot_dataset,
-		            structure: {
-		                rows: ["BranchK", "Region"],
-		                columns: ["TypeLateMax"],
-		                values: [{ name: "counts", operation: "sum",lable:"ทดสอบ" }],
-		                filters: []
-		            },
-                    ready: function () {
-		                var grid = this.$$("data");
-		                //define coloring rules for the first column
-		                grid.config.columns[1].cssFormat = function (value) { if (value < 10) return "webix_min"; }
-		                grid.refresh();
-		                console.log(grid);
-		            }
-		        });
+		        grida = new webix.ui(
+                {
+                    type: "space", rows: [
+					{ template: "DHTMLX Scheduler", type: "header" },
+					{
+					    container: "testA",
+					    view: "pivot",
+					    fieldMap: { "BranchK": "สาขา", "RegionDesc": "ภาค", "Region": "รหัสภาค", "Dept": "สายงาน", "Counts": "จำนวน", "TypeLateMax": "ประเทถการจ่ายเงิน" },
+					    max: true,
+					    //height: 800,
+					    autoheight: true,
+					    height: 800,
+					    autoheight: true,
+					    width: 1000,
+					    url: pivot_dataset,
+					    label: "ทะเบียนค้างครับ ณ xxxx",
+					    //data: pivot_dataset,
+					    structure: {
+					        rows: ["BranchK", "Region"],
+					        columns: ["TypeLateMax"],
+					        values: [{ name: "counts", operation: "sum", lable: "ทดสอบ"}],
+					        filters: []
+					    },
+					    ready: function () {
+					        var grid = this.$$("data");
+					        //define coloring rules for the first column
+					        grid.config.columns[1].cssFormat = function (value) { if (value < 10) return "webix_min"; }
+					        grid.refresh();
+					        console.log(grid);
+					    }
+					}
+				]
+                });
 		    });
 		</script>
         @ViewBag.JsonResult

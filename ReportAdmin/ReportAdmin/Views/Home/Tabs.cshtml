@@ -1,0 +1,56 @@
+﻿
+		<link rel="stylesheet" href="@Url.Content("~/Scripts/webix/webix.css")" type="text/css" charset="utf-8">
+		<script src="@Url.Content("~/Scripts/webix/webix.js")" type="text/javascript" charset="utf-8"></script>
+		<div id="areaA"></div>
+		<div id="areaB">
+		    <div style="padding:10px">
+                <input type="number" name="rank" /><br/>
+                <input type="text" name="title" value="" placeholder="Book title" /><br/>
+                <input type="date" name="year" value="" placeholder="Year" /><br/><br/>
+                <input type="button" name="submit" value="Submit" onclick='$$("formView").save()'/>
+		    </div>
+		</div>
+		
+		<script type="text/javascript" charset="utf-8">
+		    webix.ui({
+		        id: "layout",
+		        height: '100%',
+		        width: 600,
+		        container: "areaA",
+		        type: "space", padding: 1,
+                rows: [
+                    {
+                        type: "clean",
+                        rows: [
+
+                            {
+                                borderless: true, view: "tabbar", id: 'tabbar', value: 'listView', multiview: true, options: [
+                                    { value: 'Form', id: 'formView' },
+                                    { value: 'Empty', id: 'emptyView' }
+                                ]
+                            },
+                            {
+                                cells: [
+                                    {
+                                        id: "formView",
+                                        view: "htmlform",
+                                        content: "areaB",
+                                        height: '100%',
+                                        width: 600,
+                                        rules: {
+                                            title: webix.rules.isNotEmpty,
+                                            year: webix.rules.isNumber,
+                                            rank: webix.rules.isNumber
+                                        }
+                                    },
+                                    { id: "emptyView", template: " " }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+		    });
+		    $$('formView').bind($$('listView'));
+		</script>
+	</body>
+</html>

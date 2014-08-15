@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace MvcApplication1.Infrastucture
+namespace WebReport.Infrastucture
 {
     using System;
     using System.Collections.Generic;

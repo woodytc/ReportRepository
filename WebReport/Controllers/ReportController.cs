@@ -10,7 +10,7 @@ using System.Configuration;
 using System.Web.Script.Serialization;
 
 
-namespace MvcApplication1.Controllers
+namespace WebReport.Controllers
 {
     public class ReportController : Controller
     {

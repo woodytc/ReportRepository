@@ -73,10 +73,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatchtbMap.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="MasterAssetTypeMap.cs" />
+    <Compile Include="MasterDepartmentMap.cs" />
+    <Compile Include="MasterMappingCodeEQPMap.cs" />
+    <Compile Include="MasterRegionMap.cs" />
+    <Compile Include="MasterProvinceMap.cs" />
     <Compile Include="NhRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportMap.cs" />
     <Compile Include="Repository\BatchtbRepository.cs" />
+    <Compile Include="Repository\MasterProvinceRepository.cs" />
+    <Compile Include="Repository\MasterMappingCodeEQPMapRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
+    <Compile Include="Repository\MasterAssetTypeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\Antlr3.Runtime.dll" />

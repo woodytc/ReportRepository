@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KTBLeasing.WEBReport.Controllers.AccountController" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAIAAAAAAhQAAAAAAAAAAAAABAAAEAAAAAAQAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Controllers.HomeController" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.MvcApplication" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAIQAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.ChangePasswordModel" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAEAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.LogOnModel" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAgAAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.RegisterModel" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAQAAAAAAIAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.AccountMembershipService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAgAAAAQAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.FormsAuthenticationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.AccountValidation" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KTBLeasing.WEBReport.Models.ValidatePasswordLengthAttribute" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAgAAAAAAABAAAAAAABAAAAAAAg=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="KTBLeasing.WEBReport.Models.IMembershipService" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAgAAAAQAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="KTBLeasing.WEBReport.Models.IFormsAuthenticationService" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountModels.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
