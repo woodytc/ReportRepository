@@ -41,12 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Batchtb.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="MasterAssetType.cs" />
     <Compile Include="MasterDepartment.cs" />
     <Compile Include="MasterMappingCodeEQP.cs" />
     <Compile Include="MasterRegion.cs" />
-    <Compile Include="MasterSection.cs" />
+    <Compile Include="MasterProvince.cs" />
     <Compile Include="Page\Child.cs" />
     <Compile Include="Page\Child2.cs" />
     <Compile Include="Page\MappingCodeEQPDomain.cs" />

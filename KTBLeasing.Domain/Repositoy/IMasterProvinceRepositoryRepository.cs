@@ -7,10 +7,10 @@ namespace KTBLeasing.Domain.Repositoy
 {
     public interface IMasterProvinceRepository
     {
-        void Insert(MasterSection entity);
-        void Update(MasterSection entity);
-        void SaveOrUpdate(MasterSection entity);
-        List<MasterSection> Get();
-        List<MasterSection> GetTest();
+        void Insert(MasterProvince entity);
+        void Update(MasterProvince entity);
+        void SaveOrUpdate(MasterProvince entity);
+        List<MasterProvince> Get();
+        List<MasterProvince> GetTest();
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace KTBLeasing.Domain {
     
-    public class MasterSection {
+    public class MasterProvince {
         private int _id;
         private string _code;
         private string _name;

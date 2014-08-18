@@ -7,10 +7,10 @@ using KTBLeasing.Domain;
 namespace KTBLeasing.Mappings.FluentNh {
     
     
-    public class MasterProvinceMap : ClassMap<MasterSection> {
+    public class MasterProvinceMap : ClassMap<MasterProvince> {
         
         public MasterProvinceMap() {
-			Table("MasterSection");
+			Table("MasterProvince");
 			//LazyLoad();
 			Id(x => x.Id).GeneratedBy.Identity().Column("id");
             References(x => x.MasterDepartment).Column("DeptCode");
