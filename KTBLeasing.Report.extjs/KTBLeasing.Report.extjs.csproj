@@ -14,6 +14,7 @@
     <AssemblyName>KTBLeasing.Report.extjs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +70,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\NHibernate.dll</HintPath>
@@ -125,6 +128,10 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\frmReportingServiceViewer.aspx.cs">
+      <DependentUpon>frmReportingServiceViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Settings.cs" />
   </ItemGroup>
@@ -419,6 +426,7 @@
     <Content Include="lib\Ninject.dll" />
     <Content Include="lib\Remotion.Data.Linq.dll" />
     <Content Include="lib\Spring.Data.NHibernate30.dll" />
+    <Content Include="Reports\frmReportingServiceViewer.aspx" />
     <Content Include="Scripts\dhtmlx\dhtmlx.js" />
     <Content Include="Scripts\extjs\bootstrap.js" />
     <Content Include="Scripts\extjs\css\ext-all-access-debug.css" />

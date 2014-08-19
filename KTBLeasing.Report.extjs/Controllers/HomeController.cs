@@ -7,6 +7,7 @@ using KTBLeasing.ReportWeb.Models;
 using KTBLeasing.Domain;
 using KTBLeasing.Domain.Repositoy;
 using KTBLeasing.Report.extjs.Models;
+using Microsoft.Reporting.WebForms;
 
 namespace KTBLeasing.ReportWeb.Controllers
 {
@@ -29,8 +30,6 @@ namespace KTBLeasing.ReportWeb.Controllers
         
         public ActionResult Index()
         {
-            
-
             return View();
         }
 
@@ -44,6 +43,7 @@ namespace KTBLeasing.ReportWeb.Controllers
             return View();
         }
 
+        
         public JsonResult froms()
         {
 

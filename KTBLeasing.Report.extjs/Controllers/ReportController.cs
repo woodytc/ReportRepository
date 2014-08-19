@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Reporting.WebForms;
+using System.Collections;
+using KTBLeasing.Report.extjs.Properties;
 
 namespace KTBLeasing.Report.extjs.Controllers
 {
@@ -13,8 +16,17 @@ namespace KTBLeasing.Report.extjs.Controllers
 
         public ActionResult Index()
         {
-
             return View();
+        }
+
+        public ActionResult SSRSReport(string ReportName, Dictionary<string, string> ReportParameters)
+        {
+            Session["ReportServer"] = Settings.Default.SSRSReportServer;
+            Session["ReportPath"] = Settings.Default.SSRSReportPath;
+            Session["ReportParameters"] = ReportParameters;
+            Session["ReportName"] = ReportName;
+            
+            return Redirect("../Reports/frmReportingServiceViewer.aspx");
         }
 
         public ActionResult GetReportByID()
@@ -25,5 +37,15 @@ namespace KTBLeasing.Report.extjs.Controllers
             //return Redirect("http://192.168.1.109/MWT/Taglist/ShowMap" + LastId);
         }
 
+        public ActionResult testreport()
+        {
+            Dictionary<string,string> param = new Dictionary<string,string>();
+            param.Add("StartDate", DateTime.Now.ToString());
+            param.Add("EndDate", DateTime.Now.ToString());
+            param.Add("null", "null");
+
+            return this.SSRSReport("rptNotApproveReturn", param);
+        }
+        
     }
 }
