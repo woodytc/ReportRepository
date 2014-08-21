@@ -79,15 +79,6 @@ namespace KTBLeasing.Report.extjs.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
-        public string ServerDatabaseReport {
-            get {
-                return ((string)(this["ServerDatabaseReport"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("sa")]
         public string UsernameDatabaseReport {
             get {
@@ -124,7 +115,16 @@ namespace KTBLeasing.Report.extjs.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("xxx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("221.23.21.38")]
+        public string ServerDatabaseReport {
+            get {
+                return ((string)(this["ServerDatabaseReport"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FRONTHP_REPORT")]
         public string SSRSReportPath {
             get {
                 return ((string)(this["SSRSReportPath"]));

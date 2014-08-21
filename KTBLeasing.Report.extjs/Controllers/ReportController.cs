@@ -37,14 +37,13 @@ namespace KTBLeasing.Report.extjs.Controllers
             //return Redirect("http://192.168.1.109/MWT/Taglist/ShowMap" + LastId);
         }
 
-        public ActionResult testreport()
+        public ActionResult ReportYield()
         {
             Dictionary<string,string> param = new Dictionary<string,string>();
-            param.Add("StartDate", DateTime.Now.ToString());
+            param.Add("StartDate", new DateTime(DateTime.Now.Year, 1, 1).ToString());
             param.Add("EndDate", DateTime.Now.ToString());
-            param.Add("null", "null");
-
-            return this.SSRSReport("rptNotApproveReturn", param);
+            //param.Add("null", "null");
+            return this.SSRSReport("rptYield1", param);
         }
         
     }

@@ -25,6 +25,8 @@ namespace KTBLeasing.Report.extjs.Infrastucture
             var a = CreateSessionFactory();
             kernel.Bind<ISessionFactory>().ToConstant(CreateSessionFactory()).InSingletonScope();
 
+            kernel.Bind<WS_ActiveDirectory.IWS_LoginAD>().To<WS_ActiveDirectory.WS_LoginADClient>();
+
             kernel.Bind<IMasterAssetTypeRepository>()
                 .To<MasterAssetTypeRepository>()
                 .WithPropertyValue("SessionFactory", kernel.Get<ISessionFactory>());

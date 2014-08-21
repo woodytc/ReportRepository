@@ -11,6 +11,7 @@ using System.Globalization;
 using Microsoft.Reporting.Common;
 using System.Configuration;
 using KTBLeasing.Report.extjs.Properties;
+using KTBLeasing.Report.extjs.Helper;
 
 public partial class Reports_frmReportRequestReturn : System.Web.UI.Page
 {
@@ -52,19 +53,9 @@ public partial class Reports_frmReportRequestReturn : System.Web.UI.Page
             //IReportServerCredentials irsc = new CustomReportCredentials("hpssrs", "hpssrs", "ktbleasing");
             //rptViewer.ServerReport.ReportServerCredentials = irsc;
 
-            ////Specify the server credentials
-            //ReportViewer1.
-            //  ServerReport.
-            //  ReportServerCredentials =
-            //  new CustomReportCredentials
-            //   (
-            //     WebConfigurationManager.
-            //      AppSettings["ReportServerUser"],
-            //     WebConfigurationManager.
-            //      AppSettings["ReportServerPassword"],
-            //     WebConfigurationManager.
-            //      AppSettings["ReportServerDomain"]
-            //   );
+            //Specify the server credentials
+            IReportServerCredentials irsc = new CustomReportCredentials("phutip_pr", "pomnot8", "ktbleasing");
+            rptViewer.ServerReport.ReportServerCredentials = irsc;
 
             rptViewer.ServerReport.Refresh();
         }
