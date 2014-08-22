@@ -116,6 +116,10 @@
       <Project>{B1E68F39-59F0-4D4D-BE8D-1F72EBE5B662}</Project>
       <Name>KTBLeasing.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KTBLeasing.Helpers\KTBLeasing.Helpers.csproj">
+      <Project>{756AFE3E-8693-420F-81A6-6B9998F1FBD2}</Project>
+      <Name>KTBLeasing.Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

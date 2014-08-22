@@ -8,6 +8,7 @@ using KTBLeasing.Domain;
 using KTBLeasing.Domain.Repositoy;
 using KTBLeasing.Report.extjs.Models;
 using Microsoft.Reporting.WebForms;
+using KTBLeasing.Helpers;
 
 namespace KTBLeasing.ReportWeb.Controllers
 {
@@ -105,6 +106,15 @@ namespace KTBLeasing.ReportWeb.Controllers
         }
         #endregion
 
+
+        /**[20140822] Thawatchai.T Get parameter report by report id*/
+        public JsonResult GetParameterReport(int id)
+        {
+            var result = ReportRepository.GetParameterReport<Reportparameter>(id);
+            var paraname = from x in result where x.ReportID == id select new { ReportID = x.ReportID, ParameterID = x.ParamID, ParameterName = x.Parameter.Name };
+        
+            return Json(new { para=paraname,total=paraname.Count() }, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

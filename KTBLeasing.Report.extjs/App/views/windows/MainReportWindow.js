@@ -39,7 +39,7 @@ Ext.define('MainReportWindow', {
 					{ name: 'ธันวาคม', value: '12' }
                 ]
         });
-       
+
         var examlibstore = Ext.create('Ext.data.TreeStore', {
             proxy: {
                 type: 'ajax',
@@ -79,8 +79,8 @@ Ext.define('MainReportWindow', {
                         } // end select
                     } // end listeners
                 },
-                { id: me.prefix + 'principle-type', name: 'Type', fieldLabel: 'Type', hidden: true, readOnly: true },
-                { id: me.prefix + 'principle-code', name: 'Code', margin: '2 5 0 30', hidden: true, labelWidth: 145, fieldLabel: 'Code', readOnly: true }
+                { id: me.prefix + 'reportID', name: 'ReportID', fieldLabel: 'Type', hidden: true, readOnly: true }
+                
             ]
         };
 
@@ -119,7 +119,7 @@ Ext.define('MainReportWindow', {
                 {
                     xtype: 'datefield',
                     fieldLabel: 'Start Date',
-                    name: 'startDate',
+                    name: 'StartDate',
                     style: 'float: right',
                     //**cls:'x-border-box, x-border-box',**
                     id: 'todate',
@@ -144,7 +144,7 @@ Ext.define('MainReportWindow', {
 				    //**cls:'x-border-box, x-border-box',**
 				    //labelWidth: 50,
 				    //width: 150,
-				    name: 'endDate',
+				    name: 'EndDate',
 				    padding: 5,
 				    id: 'fromdate',
 				    value: fromdate,
@@ -192,25 +192,44 @@ Ext.define('MainReportWindow', {
                 handler: function (btn, evt) {
                     var form = me.down('form').getForm();
                     if (true) {
-                            form.submit({
-                                url: window.reportparam,
-                                timeout: 999999
-                            });
-                    }
-                } // end handler
-            }, {
-                iconCls: 'icon-cancel',
-                text: 'Cancel',
-                name: 'button-cancel',
-                handler: function (btn, evt) {
-                    me.intend = "cancel";
-                    me.close();
+//                        form.submit({
+//                            url: window.reportparam,
+//                            timeout: 999999,
+//                            params: {
+
+//                        });
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            data: serial,
+                            async: true,
+                            url: window.reportparam,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                if (jqXHR.responseText) {
+                                    var arrErr = jqXHR.responseText.split('p>');
+                                    if (arrErr.length > 2)
+                                        Ext.Msg.alert("Status", arrErr[1].substring(0, arrErr[1].length - 2));
+                                }
+                            }
+                        });
                 }
-            }]
-        }); // end Ext.apply
-        MainReportWindow.superclass.initComponent.apply(me, arguments);
-    } // end initComponent
-});     // end Ext.define('MainReportWindow
+            } // end handler
+        }, {
+            iconCls: 'icon-cancel',
+            text: 'Cancel',
+            name: 'button-cancel',
+            handler: function (btn, evt) {
+                me.intend = "cancel";
+                me.close();
+            }
+        }]
+    }); // end Ext.apply
+    MainReportWindow.superclass.initComponent.apply(me, arguments);
+} // end initComponent
+});      // end Ext.define('MainReportWindow
 
 
 MainReportWindow.prototype.filterConf = function (combo, mode) {
@@ -245,15 +264,18 @@ MainReportWindow.prototype.getCumulativeFields = function () {
 MainReportWindow.prototype.display = function (record) {
     var prefix = "quickconfwindow-";
     console.log(record);
-    var reportid = record.id
+
+    var id = record.id;
     //call url service get data 
     //set data to panal
     //do not something
     //exe
+    console.log("hello");
+    console.log(id);
+    MainReportWindow.prototype.GetParameter(id);
     if (true) {
         Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
         this.getCumulativeFields().show();
-        this.getMonthFields().show();
     }
 
 }
@@ -261,7 +283,7 @@ MainReportWindow.prototype.display = function (record) {
 MainReportWindow.prototype.mapping = function (e,v) {
     var prefix = "quickconfwindow-";
     console.log(record);
-    var reportid = record.id
+    var reportid = record.data.id
     
 //    if (true) {
 //        Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
@@ -269,6 +291,40 @@ MainReportWindow.prototype.mapping = function (e,v) {
 //        this.getMonthFields().show();
 //    }
 
+}
+
+MainReportWindow.prototype.GetParameter = function (id)
+{
+    Ext.Ajax.request({
+        type: "GET",
+        cache: false,
+        //data: id,
+        params:{
+            id: id
+        },
+        async: true,
+        url: window.getParameterreport,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            
+            console.log(result);
+            
+            if (result.data.Success) {
+
+            }
+            else {
+
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.responseText) {
+                var arrErr = jqXHR.responseText.split('p>');
+                if (arrErr.length > 2)
+                    Ext.Msg.alert("Status", arrErr[1].substring(0, arrErr[1].length - 2));
+            }
+        }
+    });
 }
 
 

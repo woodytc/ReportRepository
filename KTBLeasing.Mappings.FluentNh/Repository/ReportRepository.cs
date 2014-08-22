@@ -5,6 +5,7 @@ using System.Text;
 using KTBLeasing.Domain.Repositoy;
 using KTBLeasing.Domain;
 using NHibernate.Transform;
+using KTBLeasing.Helpers;
 
 namespace KTBLeasing.Mappings.FluentNh.Repository
 {
@@ -91,6 +92,33 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
                 return result as List<Reportparameter>;
                 
             }
+        }
+
+        public List<T> GetParameterReport<T>(int id)
+        {
+            using (var session = SessionFactory.OpenStatelessSession())
+            {
+                //var result = from x in
+                //                 session.QueryOver<Parameter>().List()
+                //             join y in session.QueryOver<Reportparameter>().List()
+                //             on x.ID equals y.ParamID
+                //             where y.ReportID == id
+                //             select new
+                //             {
+                //                 ReportID = y.ReportID,
+                //                 ParameterID = y.ParamID,
+                //                 ParameterName = x.Name
+                //             };
+                var result = session.QueryOver<Reportparameter>()
+                    .Fetch(x => x.Parameter).Eager
+                    .TransformUsing(new DistinctRootEntityResultTransformer())
+                 
+                    .List();
+                var abc = result.Count;
+                result.Count();
+                return result as List<T>;
+            }
+            
         }
 
         

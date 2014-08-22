@@ -1,0 +1,31 @@
+﻿    <script src='@Url.Content("~/App/views/locking-treegrid.js")' type="text/javascript"></script>
+    
+    <style type="text/css">
+        .icon-add {
+            background-image: url(images/add.png) !important;
+        }
+        .icon-edit {
+            background-image: url(images/edit.png) !important;
+        }
+        .icon-delete {
+            background-image: url(images/delete.png) !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        Ext.Loader.setConfig({ enabled: true });
+        Ext.Loader.setPath('Ext.ux', '@Url.Content("~/Scripts/extjs/ux")');
+        Ext.require(['*']);
+        Ext.QuickTips.init();
+
+        window.gridReportData = '@Url.Action("GridReport", "Home")';
+
+        window.URLGridReport = '@Url.Action("GridReport", "Home")';
+
+        window.URLCreateReport = '@Url.Action("CreateReport", "Home")';
+
+        window.treedata = '@Url.Action("tree", "Home")';
+
+</script>
+
+<div id="tree-div"></div>

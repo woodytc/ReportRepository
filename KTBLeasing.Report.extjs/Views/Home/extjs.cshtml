@@ -1,0 +1,27 @@
+<script src="@Url.Content("~/App/views/checktree.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/extjs/src/data/TreeStore.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    Ext.Loader.setConfig({ enabled: true });
+    Ext.Loader.setPath('Ext.ux', '@Url.Content("~/Scripts/extjs/ux")');
+    Ext.require(['*']);
+    Ext.QuickTips.init();
+
+    window.treedata = '@Url.Action("tree", "Home")';
+
+//    trees = new trees();
+
+//    var viewport = Ext.create('Ext.Viewport', {
+//        id: 'viewport',
+//        layout: 'border',
+//        //padding: 0,
+//        //width: '100%',
+//        border: true,
+//        items: [trees
+//                   
+//            ]
+//                });
+
+</script>
+
+    <div id="tree-div"></div>
