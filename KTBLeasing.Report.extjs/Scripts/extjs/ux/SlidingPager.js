@@ -1,16 +1,18 @@
 /**
- * Plugin for PagingToolbar which replaces the textfield input with a slider
- */
+* @class Ext.ux.SlidingPager
+* @extends Object
+* Plugin for PagingToolbar which replaces the textfield input with a slider
+* @constructor
+* Create a new ItemSelector
+* @param {Object} config Configuration options
+*/
 Ext.define('Ext.ux.SlidingPager', {
+    extend: 'Object',
     requires: [
         'Ext.slider.Single',
         'Ext.slider.Tip'
     ],
 
-    /**
-     * Creates new SlidingPager.
-     * @param {Object} config Configuration options
-     */
     constructor : function(config) {
         if (config) {
             Ext.apply(this, config);

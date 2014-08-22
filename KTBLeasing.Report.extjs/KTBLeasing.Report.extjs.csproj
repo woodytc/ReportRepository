@@ -121,6 +121,7 @@
     <Compile Include="Infrastucture\NinjectDependencyResolver.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\Child2.cs" />
+    <Compile Include="Models\ParameterModel.cs" />
     <Compile Include="Models\ReportListModel.cs" />
     <Compile Include="Models\RootObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

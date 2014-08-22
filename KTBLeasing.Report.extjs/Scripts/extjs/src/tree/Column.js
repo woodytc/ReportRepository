@@ -77,7 +77,7 @@ Ext.define('Ext.tree.Column', {
         while (record) {
             if (!record.isRoot() || (record.isRoot() && view.rootVisible)) {
                 if (record.getDepth() === depth) {
-                    buf.unshift(format(imgText,
+                    buf.unshift(format(checkboxText,imgText,
                         childCls +
                         treePrefix + 'icon ' +
                         treePrefix + 'icon' + (record.get('icon') ? '-inline ' : (record.isLeaf() ? '-leaf ' : '-parent ')) +

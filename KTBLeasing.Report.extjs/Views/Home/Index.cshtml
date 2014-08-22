@@ -13,6 +13,7 @@
 <script src="@Url.Content("~/App/model/ReportModel.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/App/model/common/CommonModel.js")" type="text/javascript"></script>
 
+<script src="@Url.Content("~/Scripts/extjs/ux/Comboboxtree.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
     Ext.Loader.setConfig({ enabled: true });
@@ -26,6 +27,10 @@
     window.URLGridReport = '@Url.Action("GridReport", "Home")';
 
     window.URLCreateReport = '@Url.Action("CreateReport", "Home")';
+
+    window.treedata = '@Url.Action("tree", "Home")';
+
+    window.reportparam = '@Url.Action("SSRSReport", "Report")';
 
     /*
     Register Tabs
