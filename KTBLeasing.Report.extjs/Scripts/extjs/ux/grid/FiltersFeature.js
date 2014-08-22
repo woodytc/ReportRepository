@@ -37,9 +37,11 @@
  *
  * ##Server side code examples:##
  *
- * - [PHP](http://www.vinylfox.com/extjs/grid-filter-php-backend-code.php) - (Thanks VinylFox)
- * - [Ruby on Rails](http://extjs.com/forum/showthread.php?p=77326#post77326) - (Thanks Zyclops)
- * - [Ruby on Rails](http://extjs.com/forum/showthread.php?p=176596#post176596) - (Thanks Rotomaul)
+ * - [PHP](http://www.vinylfox.com/extjs/grid-filter-php-backend-code.php) - (Thanks VinylFox)</li>
+ * - [Ruby on Rails](http://extjs.com/forum/showthread.php?p=77326#post77326) - (Thanks Zyclops)</li>
+ * - [Ruby on Rails](http://extjs.com/forum/showthread.php?p=176596#post176596) - (Thanks Rotomaul)</li>
+ * - [Python](http://www.debatablybeta.com/posts/using-extjss-grid-filtering-with-django/) - (Thanks Matt)</li>
+ * - [Grails](http://mcantrell.wordpress.com/2008/08/22/extjs-grids-and-grails/) - (Thanks Mike)</li>
  *
  * #Example usage:#
  *
@@ -80,7 +82,7 @@
  *     var grid = Ext.create('Ext.grid.Panel', {
  *          store: store,
  *          columns: ...,
- *          features: [filtersCfg],
+ *          filters: [filtersCfg],
  *          height: 400,
  *          width: 700,
  *          bbar: Ext.create('Ext.PagingToolbar', {
@@ -99,7 +101,6 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
         'Ext.ux.grid.menu.RangeMenu',
         'Ext.ux.grid.filter.BooleanFilter',
         'Ext.ux.grid.filter.DateFilter',
-        'Ext.ux.grid.filter.DateTimeFilter',
         'Ext.ux.grid.filter.ListFilter',
         'Ext.ux.grid.filter.NumericFilter',
         'Ext.ux.grid.filter.StringFilter'
@@ -182,10 +183,11 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
         me.filterConfigs = config.filters;
     },
 
-    init: function(grid) {
+    attachEvents: function() {
         var me = this,
             view = me.view,
-            headerCt = view.headerCt;
+            headerCt = view.headerCt,
+            grid = me.getGridPanel();
 
         me.bindStore(view.getStore(), true);
 
@@ -246,12 +248,12 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
             }
         }
 
-        // We start with filters from our config
-        Ext.Array.each(me.filterConfigs, function (filterConfig) {
-            add(filterConfig.dataIndex, filterConfig);
+        // We start with filters from our config and then merge on filters from the columns
+        // in the grid. The Grid columns take precedence.
+        Ext.Array.each(me.filterConfigs, function (fc) {
+            add(fc.dataIndex, fc);
         });
 
-        // Then we merge on filters from the columns in the grid. The columns' filters take precedence.
         Ext.Array.each(grid.columns, function (column) {
             if (column.filterable === false) {
                 filters.removeAtKey(column.dataIndex);
@@ -259,34 +261,12 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
                 add(column.dataIndex, column.filter, column.filterable);
             }
         });
-        
 
         me.removeAll();
-        if (filters.items) {
-            me.initializeFilters(filters.items);
-        }
+        me.addFilters(filters.items);
 
         if (hadFilters) {
             me.applyState(null, state);
-        }
-    },
-
-    /**
-     * @private
-     */
-    initializeFilters: function(filters) {
-        var me = this,
-            filtersLength = filters.length,
-            i, filter, FilterClass;
-
-        for (i = 0; i < filtersLength; i++) {
-            filter = filters[i];
-            if (filter) {
-                FilterClass = me.getFilterClass(filter.type);
-                filter = filter.menu ? filter : new FilterClass(filter);
-                me.filters.add(filter);
-                Ext.util.Observable.capture(filter, this.onStateChange, this);
-            }
         }
     },
 
@@ -356,26 +336,23 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
      * @param {Object} state The hash of state values returned from the StateProvider.
      */
     applyState : function (grid, state) {
-        var me = this,
-            key, filter;
-        me.applyingState = true;
-        me.clearFilters();
+        var key, filter;
+        this.applyingState = true;
+        this.clearFilters();
         if (state.filters) {
             for (key in state.filters) {
-                if (state.filters.hasOwnProperty(key)) {
-                    filter = me.filters.get(key);
-                    if (filter) {
-                        filter.setValue(state.filters[key]);
-                        filter.setActive(true);
-                    }
+                filter = this.filters.get(key);
+                if (filter) {
+                    filter.setValue(state.filters[key]);
+                    filter.setActive(true);
                 }
             }
         }
-        me.deferredUpdate.cancel();
-        if (me.local) {
-            me.reload();
+        this.deferredUpdate.cancel();
+        if (this.local) {
+            this.reload();
         }
-        delete me.applyingState;
+        delete this.applyingState;
         delete state.filters;
     },
 
@@ -510,8 +487,9 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
      * @private
      * Handler for store's load event when configured for local filtering
      * @param {Object} store
+     * @param {Object} options
      */
-    onLoad : function (store) {
+    onLoad : function (store, options) {
         store.filterBy(this.getRecordFilter());
     },
 
@@ -545,7 +523,6 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
         if (me.local) {
             store.clearFilter(true);
             store.filterBy(me.getRecordFilter());
-            store.sort();
         } else {
             me.deferredUpdate.cancel();
             if (store.buffered) {
@@ -585,34 +562,12 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
      * @return {Ext.ux.grid.filter.Filter} The existing or newly created filter object.
      */
     addFilter : function (config) {
-        var me = this,
-            columns = me.getGridPanel().columns,
-            i, columnsLength, column, filtersLength, filter;
+        var Cls = this.getFilterClass(config.type),
+            filter = config.menu ? config : (new Cls(config));
+        this.filters.add(filter);
 
-        
-        for (i = 0, columnsLength = columns.length; i < columnsLength; i++) {
-            column = columns[i];
-            if (column.dataIndex === config.dataIndex) {
-                column.filter = config;
-            }
-        }
-        
-        if (me.view.headerCt.menu) {
-            me.createFilters();
-        } else {
-            // Call getMenu() to ensure the menu is created, and so, also are the filters. We cannot call
-            // createFilters() withouth having a menu because it will cause in a recursion to applyState()
-            // that ends up to clear all the filter values. This is likely to happen when we reorder a column
-            // and then add a new filter before the menu is recreated.
-            me.view.headerCt.getMenu();
-        }
-        
-        for (i = 0, filtersLength = me.filters.items.length; i < filtersLength; i++) {
-            filter = me.filters.items[i];
-            if (filter.dataIndex === config.dataIndex) {
-                return filter;
-            }
-        }
+        Ext.util.Observable.capture(filter, this.onStateChange, this);
+        return filter;
     },
 
     /**
@@ -621,10 +576,13 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
      */
     addFilters : function (filters) {
         if (filters) {
-            var me = this,
-                i, filtersLength;
-            for (i = 0, filtersLength = filters.length; i < filtersLength; i++) {
-                me.addFilter(filters[i]);
+            var i, len, filter;
+            for (i = 0, len = filters.length; i < len; i++) {
+                filter = filters[i];
+                // if filter config found add filter for the column
+                if (filter) {
+                    this.addFilter(filter);
+                }
             }
         }
     },
@@ -648,65 +606,58 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
         });
     },
 
-    getFilterItems: function () {
-        var me = this;
-
-        // If there's a locked grid then we must get the filter items for each grid.
-        if (me.lockingPartner) {
-            return me.filters.items.concat(me.lockingPartner.filters.items);
-        }
-
-        return me.filters.items;
-    },
-
     /**
      * Returns an Array of the currently active filters.
      * @return {Array} filters Array of the currently active filters.
      */
     getFilterData : function () {
-        var items = this.getFilterItems(),
-            filters = [],
-            n, nlen, item, d, i, len;
+        var filters = [], i, len;
 
-        for (n = 0, nlen = items.length; n < nlen; n++) {
-            item = items[n];
-            if (item.active) {
-                d = [].concat(item.serialize());
+        this.filters.each(function (f) {
+            if (f.active) {
+                var d = [].concat(f.serialize());
                 for (i = 0, len = d.length; i < len; i++) {
                     filters.push({
-                        field: item.dataIndex,
+                        field: f.dataIndex,
                         data: d[i]
                     });
                 }
             }
-        }
+        });
         return filters;
     },
 
     /**
      * Function to take the active filters data and build it into a query.
-     * The format of the query depends on the {@link #encode} configuration:
+     * The format of the query depends on the <code>{@link #encode}</code>
+     * configuration:
+     * <div class="mdetail-params"><ul>
      *
-     *   - `false` (Default) :
-     *     Flatten into query string of the form (assuming <code>{@link #paramPrefix}='filters'</code>:
-     *
-     *         filters[0][field]="someDataIndex"&
-     *         filters[0][data][comparison]="someValue1"&
-     *         filters[0][data][type]="someValue2"&
-     *         filters[0][data][value]="someValue3"&
-     *
-     *
-     *   - `true` :
-     *     JSON encode the filter data
-     *
-     *         {filters:[{"field":"someDataIndex","comparison":"someValue1","type":"someValue2","value":"someValue3"}]}
-     *
+     * <li><b><tt>false</tt></b> : <i>Default</i>
+     * <div class="sub-desc">
+     * Flatten into query string of the form (assuming <code>{@link #paramPrefix}='filters'</code>:
+     * <pre><code>
+filters[0][field]="someDataIndex"&
+filters[0][data][comparison]="someValue1"&
+filters[0][data][type]="someValue2"&
+filters[0][data][value]="someValue3"&
+     * </code></pre>
+     * </div></li>
+     * <li><b><tt>true</tt></b> :
+     * <div class="sub-desc">
+     * JSON encode the filter data
+     * <pre><code>
+filters[0][field]="someDataIndex"&
+filters[0][data][comparison]="someValue1"&
+filters[0][data][type]="someValue2"&
+filters[0][data][value]="someValue3"&
+     * </code></pre>
+     * </div></li>
+     * </ul></div>
      * Override this method to customize the format of the filter query for remote requests.
-     *
      * @param {Array} filters A collection of objects representing active filters and their configuration.
-     * Each element will take the form of {field: dataIndex, data: filterConf}. dataIndex is not assured
-     * to be unique as any one filter may be a composite of more basic filters for the same dataIndex.
-     *
+     *    Each element will take the form of {field: dataIndex, data: filterConf}. dataIndex is not assured
+     *    to be unique as any one filter may be a composite of more basic filters for the same dataIndex.
      * @return {Object} Query keys and values
      */
     buildQuery : function (filters) {

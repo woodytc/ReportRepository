@@ -192,31 +192,10 @@ Ext.define('MainReportWindow', {
                 handler: function (btn, evt) {
                     var form = me.down('form').getForm();
                     if (true) {
-                        //Ext.MessageBox.show({ msg: 'Please wait save items...', width: 300, closable: false });
-                        form.submit({
-                        url: me.saveService,
-                        timeout: 999999,
-                        params: {
-                        Devices: Ext.encode(devices)
-                        },
-                        success: function (form, action) {
-                        if (action.result.success == 'True') {
-                        Ext.MessageBox.alert('Status', action.result.message + "<br>   Code: " + action.result.code);
-                        
-                        me.intend = "save-success";
-                        me.close();
-                        }
-                        else {
-                        Ext.MessageBox.alert('Status: error'
-                        , action.result.message);
-                        }
-                        },
-                        failure: function (form, action) {
-                        console.log(action);
-                        console.log(form);
-                        Ext.MessageBox.alert('Status: failure', action.result.message, me);
-                        }
-                        });
+                            form.submit({
+                                url: window.reportparam,
+                                timeout: 999999
+                            });
                     }
                 } // end handler
             }, {
@@ -278,6 +257,20 @@ MainReportWindow.prototype.display = function (record) {
     }
 
 }
+
+MainReportWindow.prototype.mapping = function (e,v) {
+    var prefix = "quickconfwindow-";
+    console.log(record);
+    var reportid = record.id
+    
+//    if (true) {
+//        Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
+//        this.getCumulativeFields().show();
+//        this.getMonthFields().show();
+//    }
+
+}
+
 
 
 
