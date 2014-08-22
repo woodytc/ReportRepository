@@ -116,12 +116,9 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\ReportingCredential.cs" />
-    <Compile Include="Helper\SHA1.cs" />
     <Compile Include="Infrastucture\ReportDI.cs" />
     <Compile Include="Infrastucture\NinjectDependencyResolver.cs" />
     <Compile Include="Models\Child.cs" />
@@ -4884,6 +4881,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\icons\Thumbs.db" />

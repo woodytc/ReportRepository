@@ -40,6 +40,11 @@ namespace KTBLeasing.Report.extjs.Controllers
             //return Redirect("http://192.168.1.109/MWT/Taglist/ShowMap" + LastId);
         }
 
+        public void ViewReport(FormCollection req)
+        {
+            string[] str = req.AllKeys;
+        }
+
         //public ActionResult testreport()
         //{
         //    Dictionary<string,string> param = new Dictionary<string,string>();
