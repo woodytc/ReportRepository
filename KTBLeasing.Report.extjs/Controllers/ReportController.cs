@@ -49,14 +49,6 @@ namespace KTBLeasing.Report.extjs.Controllers
 
         //    return this.SSRSReport("rptNotApproveReturn", param);
         //}
-        public ActionResult ReportYield()
-        {
-            Dictionary<string,string> param = new Dictionary<string,string>();
-            param.Add("StartDate", new DateTime(DateTime.Now.Year, 1, 1).ToString());
-            param.Add("EndDate", DateTime.Now.ToString());
-            //param.Add("null", "null");
-            return this.SSRSReport("rptYield1", param);
-        }
         
     }
 }
