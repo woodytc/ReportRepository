@@ -12,7 +12,8 @@ namespace KTBLeasing.Domain {
         private Parameter _parameter;
         private Report _report;
         private DateTime? _updatedate;
-        public int ReportID {
+        public virtual int ReportID
+        {
             get {
                 return this._reportid;
             }
@@ -20,7 +21,8 @@ namespace KTBLeasing.Domain {
                 this._reportid = value;
             }
         }
-        public int ParamID {
+        public virtual int ParamID
+        {
             get {
                 return this._paramid;
             }
@@ -28,7 +30,8 @@ namespace KTBLeasing.Domain {
                 this._paramid = value;
             }
         }
-        public Parameter Parameter {
+        public virtual Parameter Parameter
+        {
             get {
                 return this._parameter;
             }
@@ -36,7 +39,8 @@ namespace KTBLeasing.Domain {
                 this._parameter = value;
             }
         }
-        public Report Report {
+        public virtual Report Report
+        {
             get {
                 return this._report;
             }
@@ -44,7 +48,8 @@ namespace KTBLeasing.Domain {
                 this._report = value;
             }
         }
-        public DateTime? UpdateDate {
+        public virtual DateTime? UpdateDate
+        {
             get {
                 return this._updatedate;
             }
