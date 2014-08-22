@@ -12,7 +12,8 @@ namespace KTBLeasing.Domain {
         private string _name;
         private DateTime? _updatedate;
         public Parameter() { }
-        public int ID {
+        public virtual int ID
+        {
             get {
                 return this._id;
             }
@@ -20,7 +21,8 @@ namespace KTBLeasing.Domain {
                 this._id = value;
             }
         }
-        public string Name {
+        
+        public virtual string Name {
             get {
                 return this._name;
             }
@@ -28,7 +30,9 @@ namespace KTBLeasing.Domain {
                 this._name = value;
             }
         }
-        public DateTime? UpdateDate {
+
+        public virtual DateTime? UpdateDate
+        {
             get {
                 return this._updatedate;
             }
@@ -36,5 +40,6 @@ namespace KTBLeasing.Domain {
                 this._updatedate = value;
             }
         }
+
     }
 }

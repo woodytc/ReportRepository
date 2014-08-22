@@ -18,7 +18,8 @@ namespace KTBLeasing.Domain {
         private DateTime? _updatedate;
         private bool? _isdelete;
         public Report() { }
-        public int Id {
+        public virtual int Id
+        {
             get {
                 return this._id;
             }
@@ -26,7 +27,8 @@ namespace KTBLeasing.Domain {
                 this._id = value;
             }
         }
-        public string Reportname {
+        public virtual string Reportname
+        {
             get {
                 return this._reportname;
             }
@@ -34,7 +36,8 @@ namespace KTBLeasing.Domain {
                 this._reportname = value;
             }
         }
-        public string Reportfilename {
+        public virtual string Reportfilename
+        {
             get {
                 return this._reportfilename;
             }
@@ -42,7 +45,8 @@ namespace KTBLeasing.Domain {
                 this._reportfilename = value;
             }
         }
-        public string Path {
+        public virtual string Path
+        {
             get {
                 return this._path;
             }
@@ -50,7 +54,8 @@ namespace KTBLeasing.Domain {
                 this._path = value;
             }
         }
-        public string Createby {
+        public virtual string Createby
+        {
             get {
                 return this._createby;
             }
@@ -58,7 +63,8 @@ namespace KTBLeasing.Domain {
                 this._createby = value;
             }
         }
-        public DateTime? Createdate {
+        public virtual DateTime? Createdate
+        {
             get {
                 return this._createdate;
             }
@@ -66,7 +72,8 @@ namespace KTBLeasing.Domain {
                 this._createdate = value;
             }
         }
-        public string Updateby {
+        public virtual string Updateby
+        {
             get {
                 return this._updateby;
             }
@@ -74,7 +81,8 @@ namespace KTBLeasing.Domain {
                 this._updateby = value;
             }
         }
-        public DateTime? Updatedate {
+        public virtual DateTime? Updatedate
+        {
             get {
                 return this._updatedate;
             }
@@ -82,7 +90,8 @@ namespace KTBLeasing.Domain {
                 this._updatedate = value;
             }
         }
-        public bool? Isdelete {
+        public virtual bool? Isdelete
+        {
             get {
                 return this._isdelete;
             }

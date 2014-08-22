@@ -77,7 +77,7 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
 
         /** [20140820] woody Add get report parameters */
 
-        private List<Reportparameter> GetReportParmById(int idreport)
+        public List<Reportparameter> GetReportParmById(int idreport)
         {
             using (var session = SessionFactory.OpenStatelessSession())
             {
@@ -92,6 +92,8 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
                 
             }
         }
+
+        
 
         
     }

@@ -12,5 +12,8 @@ namespace KTBLeasing.Domain.Repositoy
         void Update(Report entity);
         void SaveOrUpdate(Report entity);
         List<Report> Get();
+        /** [20140822] Thawatcahi.T get report parameter*/
+        List<Reportparameter> GetReportParmById(int idreport);
+
     }
 }
