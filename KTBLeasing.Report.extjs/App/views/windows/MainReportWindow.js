@@ -1,4 +1,6 @@
-﻿Ext.define('MainReportWindow', {
+﻿
+
+Ext.define('MainReportWindow', {
     extend: 'Ext.Window',
     initComponent: function () {
         var me = this;
@@ -37,17 +39,37 @@
 					{ name: 'ธันวาคม', value: '12' }
                 ]
         });
+       
+        var examlibstore = Ext.create('Ext.data.TreeStore', {
+            proxy: {
+                type: 'ajax',
+                //url: "Authority/GetAuthority",
+                url: window.treedata//,
+
+                //                actionMethods: 'post'
+            },
+            sorters: [{
+                property: 'leaf',
+                direction: 'ASC'
+            }, {
+                property: 'text',
+                direction: 'ASC'
+            }]
+        });
+
+
+
         /** ==============================================================  END Store ==============================*/
         //1
         var mainParameterFields = {
             title: "Information",
             xtype: 'fieldset',
             defaultType: 'textfield',
-			
+
             layout: { type: 'table', columns: 2 },
             defaults: { style: 'margin:2px 5px;', labelWidth: 170 },
             items: [
-                { id: me.prefix + 'conf-type', name: 'ConfigurationType', xtype: 'combo', mode: 'local', editable: false, width: 600
+                { id: me.prefix + 'parameter-type', name: 'ConfigurationType', xtype: 'combo', mode: 'local', editable: false, width: 600
                     , fieldLabel: 'Parameter Type', displayField: 'name', valueField: 'value', queryMode: 'local', anchor: '-10'
                     , value: '', emptyText: '------ Please select ------', allowBlank: false
                     , store: me.configTypeStore, colspan: 2
@@ -78,7 +100,7 @@
                     , store: me.monthStore,
                     fieldLabel: 'Month', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
                 },
-				{id: prefix + 'month', name: 'month', xtype: 'datefield' }
+				{ id: prefix + 'month', name: 'month', xtype: 'datefield' }
             ]
         };
         /** Date between */
@@ -96,8 +118,8 @@
             items: [
                 {
                     xtype: 'datefield',
-                    fieldLabel: 'To',
-                    name: 'to_date',
+                    fieldLabel: 'Start Date',
+                    name: 'startDate',
                     style: 'float: right',
                     //**cls:'x-border-box, x-border-box',**
                     id: 'todate',
@@ -117,12 +139,12 @@
                 },
 				{
 				    xtype: 'datefield',
-				    fieldLabel: 'From',
+				    fieldLabel: 'End Date',
 				    style: 'float: right',
 				    //**cls:'x-border-box, x-border-box',**
 				    //labelWidth: 50,
 				    //width: 150,
-				    name: '_fromdate',
+				    name: 'endDate',
 				    padding: 5,
 				    id: 'fromdate',
 				    value: fromdate,
@@ -170,9 +192,8 @@
                 handler: function (btn, evt) {
                     var form = me.down('form').getForm();
                     if (true) {
-                        Ext.MessageBox.show({ msg: 'Please wait save items...', width: 300, closable: false });
-                        /* form.submit({
-
+                        //Ext.MessageBox.show({ msg: 'Please wait save items...', width: 300, closable: false });
+                        form.submit({
                         url: me.saveService,
                         timeout: 999999,
                         params: {
@@ -181,9 +202,7 @@
                         success: function (form, action) {
                         if (action.result.success == 'True') {
                         Ext.MessageBox.alert('Status', action.result.message + "<br>   Code: " + action.result.code);
-                        //                                    if (me.quickStore.proxy.url) {
-                        //                                        me.quickStore.load();
-                        //                                    }
+                        
                         me.intend = "save-success";
                         me.close();
                         }
@@ -191,13 +210,13 @@
                         Ext.MessageBox.alert('Status: error'
                         , action.result.message);
                         }
-                        }, //success
+                        },
                         failure: function (form, action) {
                         console.log(action);
                         console.log(form);
                         Ext.MessageBox.alert('Status: failure', action.result.message, me);
                         }
-                        }); // end form.submit */
+                        });
                     }
                 } // end handler
             }, {
@@ -212,7 +231,7 @@
         }); // end Ext.apply
         MainReportWindow.superclass.initComponent.apply(me, arguments);
     } // end initComponent
-});    // end Ext.define('MainReportWindow
+});     // end Ext.define('MainReportWindow
 
 
 MainReportWindow.prototype.filterConf = function (combo, mode) {
@@ -239,5 +258,26 @@ MainReportWindow.prototype.getMonthFields = function () {
 MainReportWindow.prototype.getCumulativeFields = function () {
     return Ext.getCmp(this.prefix + 'cumulativeFields');
 }
+
+/** [20140822] Thawatchai.T add setRecord to window popup 
+*    syntax set value 
+*    Ext.getCmp(UI ID).setvalue(value)
+*/
+MainReportWindow.prototype.display = function (record) {
+    var prefix = "quickconfwindow-";
+    console.log(record);
+    var reportid = record.id
+    //call url service get data 
+    //set data to panal
+    //do not something
+    //exe
+    if (true) {
+        Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
+        this.getCumulativeFields().show();
+        this.getMonthFields().show();
+    }
+
+}
+
 
 

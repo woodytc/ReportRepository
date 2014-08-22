@@ -1,7 +1,8 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
-//using NHibernate.Validator.Constraints;
+using System.ComponentModel;
+//using System.ComponentModel.DataAnnotations;
 
 
 namespace KTBLeasing.Domain {
@@ -15,7 +16,9 @@ namespace KTBLeasing.Domain {
         private DateTime? _createdate;
         private string _updateby;
         private DateTime? _updatedate;
-        public virtual int Id {
+        private bool? _isdelete;
+        public Report() { }
+        public int Id {
             get {
                 return this._id;
             }
@@ -23,7 +26,7 @@ namespace KTBLeasing.Domain {
                 this._id = value;
             }
         }
-        public virtual string Reportname {
+        public string Reportname {
             get {
                 return this._reportname;
             }
@@ -31,7 +34,7 @@ namespace KTBLeasing.Domain {
                 this._reportname = value;
             }
         }
-        public virtual string Reportfilename {
+        public string Reportfilename {
             get {
                 return this._reportfilename;
             }
@@ -39,7 +42,7 @@ namespace KTBLeasing.Domain {
                 this._reportfilename = value;
             }
         }
-        public virtual string Path {
+        public string Path {
             get {
                 return this._path;
             }
@@ -47,7 +50,7 @@ namespace KTBLeasing.Domain {
                 this._path = value;
             }
         }
-        public virtual string Createby {
+        public string Createby {
             get {
                 return this._createby;
             }
@@ -55,7 +58,7 @@ namespace KTBLeasing.Domain {
                 this._createby = value;
             }
         }
-        public virtual DateTime? Createdate {
+        public DateTime? Createdate {
             get {
                 return this._createdate;
             }
@@ -63,7 +66,7 @@ namespace KTBLeasing.Domain {
                 this._createdate = value;
             }
         }
-        public virtual string Updateby {
+        public string Updateby {
             get {
                 return this._updateby;
             }
@@ -71,12 +74,20 @@ namespace KTBLeasing.Domain {
                 this._updateby = value;
             }
         }
-        public virtual DateTime? Updatedate {
+        public DateTime? Updatedate {
             get {
                 return this._updatedate;
             }
             set {
-                this._updatedate = DateTime.Now;
+                this._updatedate = value;
+            }
+        }
+        public bool? Isdelete {
+            get {
+                return this._isdelete;
+            }
+            set {
+                this._isdelete = value;
             }
         }
     }

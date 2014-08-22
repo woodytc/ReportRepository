@@ -11,7 +11,6 @@ namespace KTBLeasing.Mappings.FluentNh {
         
         public ReportMap() {
 			Table("Report");
-			LazyLoad();
 			Id(x => x.Id).GeneratedBy.Identity().Column("ID");
 			Map(x => x.Reportname).Column("ReportName");
 			Map(x => x.Reportfilename).Column("ReportFileName");
@@ -20,6 +19,7 @@ namespace KTBLeasing.Mappings.FluentNh {
 			Map(x => x.Createdate).Column("CreateDate");
 			Map(x => x.Updateby).Column("UpdateBy");
 			Map(x => x.Updatedate).Column("UpdateDate");
+			Map(x => x.Isdelete).Column("IsDelete");
         }
     }
 }
