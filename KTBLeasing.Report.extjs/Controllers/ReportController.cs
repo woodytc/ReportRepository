@@ -21,13 +21,13 @@ namespace KTBLeasing.Report.extjs.Controllers
             return View();
         }
 
-        //public ActionResult SSRSReport(string ReportName, Dictionary<string, string> ReportParameters)
-        public ActionResult SSRSReport(ParameterModel rptparam)
+        public ActionResult SSRSReport(string ReportName, Dictionary<string, string> ReportParameters)
+        //public ActionResult SSRSReport(ParameterModel rptparam)
         {
             Session["ReportServer"] = Settings.Default.SSRSReportServer;
             Session["ReportPath"] = Settings.Default.SSRSReportPath;
-            Session["ReportParameters"] = rptparam.Parameter;// ReportParameters;
-            Session["ReportName"] = rptparam.ReportName;//ReportName;
+            Session["ReportParameters"] = ReportParameters;//rptparam.Parameter;// 
+            Session["ReportName"] = ReportName; //rptparam.ReportName;//
             
             return Redirect("../Reports/frmReportingServiceViewer.aspx");
         }
