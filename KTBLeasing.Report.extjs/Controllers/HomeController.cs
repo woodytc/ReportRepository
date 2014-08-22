@@ -50,6 +50,11 @@ namespace KTBLeasing.ReportWeb.Controllers
             return null;
         }
 
+        public void GetReportByID()
+        {
+
+        }
+
         public JsonResult tree()
         {
             RootObject rootojb = new RootObject();

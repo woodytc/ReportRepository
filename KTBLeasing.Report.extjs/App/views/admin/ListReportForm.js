@@ -89,46 +89,19 @@
                 columns: [
             { text: 'รหัสรายงาย', dataIndex: 'Id', width: '20%', sortable: false, align: 'center' },
             { text: 'ชื่อรายงาน', dataIndex: 'Reportname', width: '40%', sortable: false, align: 'felt' },
-           
+
             { text: 'ชื่อรายงาน', dataIndex: 'Path', width: '20%', sortable: false, align: 'felt' }
             ],
-            bbar: Ext.create('Ext.PagingToolbar', {
-                id: me.prefix + 'PagingToolbar',
-                store: me.gridStore
+                bbar: Ext.create('Ext.PagingToolbar', {
+                    id: me.prefix + 'PagingToolbar',
+                    store: me.gridStore
             , displayInfo: true
             , displayMsg: 'รายงาน {0} - {1} of {2}'
             , emptyMsg: "ไม่มี รายงาน"
                 }),
                 viewConfig: {
                     listeners: {
-                        //itemdblclick: me.popUpEditItem
-                        itemdblclick: function () {
-                            var quickConfWindow = new MainReportWindow(
-                            {
-                                listeners: {
-                                    close: function (panel, eOpts) {
-                                        if (panel.intend === 'save-success') {
-                                            console.log('insave success');
-                                            //me.search(window.gridCatelogyData, me.username);
-                                        }
-                                    }
-                                }//,
-                               // animateTarget: btn
-                            }
-                            );
-                            //quickConfWindow.create();
-                            quickConfWindow.show();
-                            // quickConfWindow.saveService = window.SaveQuickDeploymentAct;
-                            //Ext.MessageBox.hide();
-                                    
-//                                new Ext.Window({
-//                                title: 'Hello World Window',
-//                                html: 'Am I the right size?',
-//                                height: Ext.getBody().getViewSize().height,
-//                                width: Ext.getBody().getViewSize()
-//                                                        }).show();
-                            //window.open('http://srv-ktblhp/Reports/Pages/Report.aspx?ItemPath=%2fBusiness+Leasing+Report%2frptYield1');
-                            }
+                        itemdblclick: me.popUpEditItem
                     }
                 }, //end view config
 
@@ -144,14 +117,15 @@
                         var gridpanel = btn.up().up();
                         var recordSelected = gridpanel.getSelectionModel().getSelection();
                         if (recordSelected.length == 1) {
-                            console.log('windows');
-                            new Ext.Window({
-                                title: 'Hello World Window',
-                                html: 'Am I the right size?',
-                                height: Ext.getBody().getViewSize().height,
-                                width: Ext.getBody().getViewSize()
-                            }).show();
-                            //me.popUpEditItem(gridpanel, recordSelected[0], btn);
+
+//                            console.log('windows');
+//                            new Ext.Window({
+//                                title: 'Hello World Window',
+//                                html: 'Am I the right size?',
+//                                height: Ext.getBody().getViewSize().height,
+//                                width: Ext.getBody().getViewSize()
+//                            }).show();
+                            me.popUpEditItem(gridpanel, recordSelected[0], btn);
                         }
                     } //end handler
                 }] // end items
@@ -167,9 +141,21 @@
 
 //fn update
 ListReportForm.prototype.popUpEditItem = function (dataview, record, parent, mode) {
-    var id = record.get('Id');
-    var name = record.get("Name");
-    ListReportForm.prototype.popUpEditListReport(id, name);
+    
+    /* [20140822] Thawatchai.T send data to window popup */
+    var quickConfWindow = new MainReportWindow(
+                            {
+                                listeners: {
+                                    close: function (panel, eOpts) {
+                                        if (panel.intend === 'save-success') {
+                                            console.log('insave success');
+                                            //me.search(window.gridCatelogyData, me.username);
+                                        }
+                                    }
+                                }
+                            });
+    quickConfWindow.display(record);
+    quickConfWindow.show();
 };
 
 //fn search

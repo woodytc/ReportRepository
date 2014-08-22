@@ -74,6 +74,25 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
 
             return null;
         }
+
+        /** [20140820] woody Add get report parameters */
+
+        private List<Reportparameter> GetReportParmById(int idreport)
+        {
+            using (var session = SessionFactory.OpenStatelessSession())
+            {
+                var result = session.QueryOver<Reportparameter>()
+                    .Fetch(x => x.Parameter).Eager
+                    .TransformUsing(new DistinctRootEntityResultTransformer())
+                    .Fetch(x => x.Report).Eager
+                    .TransformUsing(new DistinctRootEntityResultTransformer())
+                    .List();
+
+                return result as List<Reportparameter>;
+                
+            }
+        }
+
         
     }
 }
