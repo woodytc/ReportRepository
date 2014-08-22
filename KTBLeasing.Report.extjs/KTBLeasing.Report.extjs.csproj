@@ -120,13 +120,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\ReportingCredential.cs" />
+    <Compile Include="Helper\ReportingCredential..cs" />
     <Compile Include="Helper\SHA1.cs" />
     <Compile Include="Infrastucture\ReportDI.cs" />
     <Compile Include="Infrastucture\NinjectDependencyResolver.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\Child2.cs" />
-    <Compile Include="Models\ParameterModel.cs" />
     <Compile Include="Models\ReportListModel.cs" />
     <Compile Include="Models\RootObject.cs" />
     <Compile Include="Models\User.cs" />
