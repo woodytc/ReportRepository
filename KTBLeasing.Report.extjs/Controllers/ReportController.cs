@@ -53,8 +53,8 @@ namespace KTBLeasing.Report.extjs.Controllers
                 {
                     dicpara.Add(items.name, items.value);
                 }
-                
-                return SSRSReport(reportname, dicpara);
+
+                return SSRSReport(JsonConvert.DeserializeObject<string>(reportname), dicpara);
             }
             else
             {

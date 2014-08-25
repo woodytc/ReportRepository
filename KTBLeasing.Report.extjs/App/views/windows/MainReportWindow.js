@@ -141,7 +141,7 @@ Ext.define('MainReportWindow', {
             layout: { type: 'table', columns: 1 },
             defaults: { style: 'margin:2px 5px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
             items: [
-                    { id: prefix + 'tr', name: 'TR', xtype: 'combo', mode: 'local', editable: false, displayField: 'name', valueField: 'value'
+                    { id: prefix + 'TR', name: 'TR', xtype: 'combo', mode: 'local', editable: false, displayField: 'name', valueField: 'value'
                             , queryMode: 'local', allowBlank: false, emptyText: 'selected'
                         , store: me.trStore,
                         fieldLabel: 'TR', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
@@ -251,32 +251,23 @@ Ext.define('MainReportWindow', {
                 text: 'Save',
                 id: me.prefix + 'conf-button-save',
                 handler: function (btn, evt) {
-
+    
                     var dictionary = {}; //create new object
                     var dictionaryarr = [];
-                    //dictionary["ReportName"] = Ext.getCmp(me.prefix + 'ReportName').getValue();
-                    var map = new Ext.util.HashMap();
-
-
 
                     Ext.each(Ext.decode(Ext.getCmp('quickconfwindow-parameterName').getValue()), function (pr) {
-                        //                        console.log(pr.name);
-                        //                        console.log(Ext.getCmp(me.prefix + pr.name).getValue());
-                        map.add(pr.name, Ext.getCmp(me.prefix + pr.name).getValue());
-                        //                        dictionaryarr.push({ name: c, value: Ext.getCmp(me.prefix + pr.name).getValue() });
                         dictionaryarr.push({ name: pr.name, value: Ext.getCmp(me.prefix + pr.name).getValue() });
                     });
 
 
                     var ReportName = Ext.getCmp(me.prefix + 'ReportName').getValue();
                     var paralist = { ReportName: ReportName, Parameter: dictionary }
-
+                    
                     Ext.Ajax.request({
                         type: "POST",
                         cache: false,
-                        //data: Ext.encode(paralist),
                         params: {
-                            reportname: ReportName,
+                            reportname: Ext.encode(ReportName),
                             paralist: Ext.encode(dictionaryarr)
                         },
                         async: true,
@@ -287,7 +278,7 @@ Ext.define('MainReportWindow', {
                             window.open(data.url);
                         }, //success
                         failure: function (result) {
-                            
+
                         },
                         contentType: "application/json; charset=utf-8",
                         dataType: "json"
@@ -306,8 +297,7 @@ Ext.define('MainReportWindow', {
         }); // end Ext.apply
         MainReportWindow.superclass.initComponent.apply(me, arguments);
     } // end initComponent
-});                                      // end Ext.define('MainReportWindow
-
+});   
 
 MainReportWindow.prototype.filterConf = function (combo, mode) {
     var prefix = "quickconfwindow-";
