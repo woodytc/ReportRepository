@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgrStatus.cs" />
     <Compile Include="Batchtb.cs" />
     <Compile Include="MasterAssetType.cs" />
     <Compile Include="MasterDepartment.cs" />

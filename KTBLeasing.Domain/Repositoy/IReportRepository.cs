@@ -14,5 +14,7 @@ namespace KTBLeasing.Domain.Repositoy
         List<Report> Get();
         /** [20140822] Thawatcahi.T get report parameter*/
         List<T> GetParameterReport<T>(int id);
+        /** [20140825] Thawatchai.T Get combo Arg status */
+        List<AgrStatus> GetAgrStatus();
     }
 }

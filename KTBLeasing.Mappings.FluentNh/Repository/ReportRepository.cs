@@ -121,7 +121,16 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
             
         }
 
-        
+        public List<AgrStatus> GetAgrStatus()
+        {
+            using (var session = SessionFactory.OpenStatelessSession())
+            {
+                var result = (from x in session.QueryOver<AgrStatus>() where x.Active == true select x).List() as List<AgrStatus>;
+                return result;    
+                              
+                              
+            }
+        }
 
         
     }

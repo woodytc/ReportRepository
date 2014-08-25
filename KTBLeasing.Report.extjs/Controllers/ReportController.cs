@@ -8,6 +8,7 @@ using System.Collections;
 using KTBLeasing.Report.extjs.Properties;
 using KTBLeasing.Report.extjs.Models;
 using KTBLeasing.Domain;
+using Newtonsoft.Json;
 
 namespace KTBLeasing.Report.extjs.Controllers
 {
@@ -21,15 +22,16 @@ namespace KTBLeasing.Report.extjs.Controllers
             return View();
         }
 
-        public ActionResult SSRSReport(string ReportName, Dictionary<string, string> ReportParameters)
+        public JsonResult SSRSReport(string ReportName, Dictionary<string, string> ReportParameters)
         //public ActionResult SSRSReport(ParameterModel rptparam)
         {
+            Session.Clear();
             Session["ReportServer"] = Settings.Default.SSRSReportServer;
             Session["ReportPath"] = Settings.Default.SSRSReportPath;
             Session["ReportParameters"] = ReportParameters;//rptparam.Parameter;// 
             Session["ReportName"] = ReportName; //rptparam.ReportName;//
             
-            return Redirect("../Reports/frmReportingServiceViewer.aspx");
+            return Json(new{url="../Reports/frmReportingServiceViewer.aspx"},JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetReportByID()
@@ -40,20 +42,33 @@ namespace KTBLeasing.Report.extjs.Controllers
             //return Redirect("http://192.168.1.109/MWT/Taglist/ShowMap" + LastId);
         }
 
-        public void ViewReport(FormCollection req)
+        public JsonResult ViewReport(string reportname, string[] paralist)
         {
-            string[] str = req.AllKeys;
+
+            if (paralist.Count() > 0)
+            {
+                var listJsonResult = JsonConvert.DeserializeObject<List<ParaName>>(paralist[0]);
+                Dictionary<string, string> dicpara = new Dictionary<string, string>();
+                foreach (var items in listJsonResult)
+                {
+                    dicpara.Add(items.name, items.value);
+                }
+                
+                return SSRSReport(reportname, dicpara);
+            }
+            else
+            {
+                Dictionary<string, string> dicpara = new Dictionary<string, string>();
+                dicpara.Add(string.Empty, string.Empty);
+
+                return SSRSReport(reportname, dicpara);
+            }
         }
+    }
 
-        //public ActionResult testreport()
-        //{
-        //    Dictionary<string,string> param = new Dictionary<string,string>();
-        //    param.Add("StartDate", DateTime.Now.ToString());
-        //    param.Add("EndDate", DateTime.Now.ToString());
-        //    param.Add("null", "null");
-
-        //    return this.SSRSReport("rptNotApproveReturn", param);
-        //}
-        
+    public class ParaName
+    {
+        public string name { get; set; }
+        public string value { get; set; }
     }
 }

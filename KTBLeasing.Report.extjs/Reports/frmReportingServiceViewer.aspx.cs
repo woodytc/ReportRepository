@@ -24,7 +24,7 @@ public partial class Reports_frmReportRequestReturn : System.Web.UI.Page
                 ShowReport();
             }
 
-            Session.Clear();
+          //  Session.Clear();
         }
         catch (Exception ex)
         {

@@ -112,8 +112,16 @@ namespace KTBLeasing.ReportWeb.Controllers
         {
             var result = ReportRepository.GetParameterReport<Reportparameter>(id);
             var paraname = from x in result where x.ReportID == id select new { ReportID = x.ReportID, ParameterID = x.ParamID, ParameterName = x.Parameter.Name };
-        
-            return Json(new { para=paraname,total=paraname.Count() }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { items = paraname, total = paraname.Count(), success=(paraname.Count()>0)?true:false }, JsonRequestBehavior.AllowGet);
+        }
+
+        /** [20140825] Thawatchai.T getComboParameter report AGRStauts */
+        public JsonResult GetAgrStatus()
+        {
+            var result = this.ReportRepository.GetAgrStatus();
+
+            return Json(new { items = result.Select(x => new { Name = x.AgrStsName, AgrStatus = x.AgrSts }), total = result.Count }, JsonRequestBehavior.AllowGet);
         }
 
     }

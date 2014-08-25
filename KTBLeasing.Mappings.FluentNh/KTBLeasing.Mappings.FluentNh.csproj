@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgrStatusMap.cs" />
     <Compile Include="BatchtbMap.cs" />
     <Compile Include="MasterAssetTypeMap.cs" />
     <Compile Include="MasterDepartmentMap.cs" />

@@ -17,7 +17,21 @@ Ext.define('MainReportWindow', {
             data: [
                     { name: 'รายเดือน', value: 'month' },
                     { name: 'สะสม', value: 'cumulative' },
-                    { name: 'other', value: 'TowingConf' }
+                    { name: 'TR', value: 'TR' }
+                ]
+        });
+
+        me.paralistTypeStore = Ext.create('Ext.data.Store', {
+            id: me.prefix + 'teststore',
+            fields: ['name', 'value']
+        });
+
+        me.trStore = Ext.create('Ext.data.Store', {
+            fields: ['name', 'value'],
+            data: [
+                    { name: 'T', value: 'T' },
+                    { name: 'R', value: 'R' },
+                    { name: 'not tr', value: '' }
                 ]
         });
 
@@ -57,7 +71,19 @@ Ext.define('MainReportWindow', {
             }]
         });
 
-
+        me.agrStatusStore = Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            fields: ['AgrStatus', 'Name'],
+            proxy: {
+                type: 'ajax',
+                api: { read: window.getAgrStatus },
+                reader: {
+                    type: 'json',
+                    root: 'items',
+                    totalProperty: 'total'
+                }
+            }
+        });
 
         /** ==============================================================  END Store ==============================*/
         //1
@@ -65,7 +91,7 @@ Ext.define('MainReportWindow', {
             title: "Information",
             xtype: 'fieldset',
             defaultType: 'textfield',
-
+            hidden: true,
             layout: { type: 'table', columns: 2 },
             defaults: { style: 'margin:2px 5px;', labelWidth: 170 },
             items: [
@@ -79,8 +105,10 @@ Ext.define('MainReportWindow', {
                         } // end select
                     } // end listeners
                 },
-                { id: me.prefix + 'reportID', name: 'ReportID', fieldLabel: 'Type', hidden: true, readOnly: true }
-                
+                { id: me.prefix + 'reportID', name: 'ReportID', fieldLabel: 'ReportID', hidden: true, readOnly: true },
+                { id: me.prefix + 'parameterName', name: 'ParameterName', fieldLabel: 'ParameterName', hidden: true, readOnly: true },
+                { id: me.prefix + 'ReportName', name: 'ReportName', fieldLabel: 'ReportName', hidden: true, readOnly: true }
+
             ]
         };
 
@@ -103,6 +131,39 @@ Ext.define('MainReportWindow', {
 				{ id: prefix + 'month', name: 'month', xtype: 'datefield' }
             ]
         };
+
+        var trFields = {
+            title: 'TR',
+            hidden: true,
+            id: me.prefix + 'trFields',
+            xtype: 'fieldset',
+            defaultType: 'textfield',
+            layout: { type: 'table', columns: 1 },
+            defaults: { style: 'margin:2px 5px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
+            items: [
+                    { id: prefix + 'tr', name: 'TR', xtype: 'combo', mode: 'local', editable: false, displayField: 'name', valueField: 'value'
+                            , queryMode: 'local', allowBlank: false, emptyText: 'selected'
+                        , store: me.trStore,
+                        fieldLabel: 'TR', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
+                    }
+                ]
+        };
+        var agrStatusFields = {
+            title: 'Agr Status',
+            hidden: true,
+            id: me.prefix + 'agrStatusFields',
+            xtype: 'fieldset',
+            defaultType: 'textfield',
+            layout: { type: 'table', columns: 1 },
+            defaults: { style: 'margin:2px 5px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
+            items: [
+                { id: prefix + 'AgrStatus', name: 'AgrStatus', xtype: 'combo', mode: 'local', editable: false, displayField: 'Name', valueField: 'AgrStatus'
+                        , queryMode: 'local', allowBlank: false, emptyText: 'selected'
+                    , store: me.agrStatusStore,
+                    fieldLabel: 'AgrStatus', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
+                }
+            ]
+        };
         /** Date between */
         var todate = '';
         var today = '';
@@ -122,7 +183,7 @@ Ext.define('MainReportWindow', {
                     name: 'StartDate',
                     style: 'float: right',
                     //**cls:'x-border-box, x-border-box',**
-                    id: 'todate',
+                    id: me.prefix + 'StartDate',
                     padding: 5,
                     //width: 130,
                     //labelWidth: 30,
@@ -146,7 +207,7 @@ Ext.define('MainReportWindow', {
 				    //width: 150,
 				    name: 'EndDate',
 				    padding: 5,
-				    id: 'fromdate',
+				    id: me.prefix + 'EndDate',
 				    value: fromdate,
 				    maxValue: today,
 				    format: "d.m.Y",
@@ -182,71 +243,94 @@ Ext.define('MainReportWindow', {
                 buttonAlign: 'center',
                 autoScroll: true,
                 defaults: { style: 'margin:5px 5px 2px 10px;', labelWidth: 180, anchor: '100%' },
-                items: [mainParameterFields, monthFields, cumulativeFields]
+                items: [mainParameterFields, monthFields, cumulativeFields, trFields, agrStatusFields]
             }],
             buttons: [
             {
                 iconCls: 'icon-save',
                 text: 'Save',
-                id: prefix + 'conf-button-save',
+                id: me.prefix + 'conf-button-save',
                 handler: function (btn, evt) {
-                    var form = me.down('form').getForm();
-                    if (true) {
-//                        form.submit({
-//                            url: window.reportparam,
-//                            timeout: 999999,
-//                            params: {
 
-//                        });
+                    var dictionary = {}; //create new object
+                    var dictionaryarr = [];
+                    //dictionary["ReportName"] = Ext.getCmp(me.prefix + 'ReportName').getValue();
+                    var map = new Ext.util.HashMap();
 
-                        $.ajax({
-                            type: "POST",
-                            cache: false,
-                            data: serial,
-                            async: true,
-                            url: window.reportparam,
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                if (jqXHR.responseText) {
-                                    var arrErr = jqXHR.responseText.split('p>');
-                                    if (arrErr.length > 2)
-                                        Ext.Msg.alert("Status", arrErr[1].substring(0, arrErr[1].length - 2));
-                                }
-                            }
-                        });
+
+
+                    Ext.each(Ext.decode(Ext.getCmp('quickconfwindow-parameterName').getValue()), function (pr) {
+                        //                        console.log(pr.name);
+                        //                        console.log(Ext.getCmp(me.prefix + pr.name).getValue());
+                        map.add(pr.name, Ext.getCmp(me.prefix + pr.name).getValue());
+                        //                        dictionaryarr.push({ name: c, value: Ext.getCmp(me.prefix + pr.name).getValue() });
+                        dictionaryarr.push({ name: pr.name, value: Ext.getCmp(me.prefix + pr.name).getValue() });
+                    });
+
+
+                    var ReportName = Ext.getCmp(me.prefix + 'ReportName').getValue();
+                    var paralist = { ReportName: ReportName, Parameter: dictionary }
+
+                    Ext.Ajax.request({
+                        type: "POST",
+                        cache: false,
+                        //data: Ext.encode(paralist),
+                        params: {
+                            reportname: ReportName,
+                            paralist: Ext.encode(dictionaryarr)
+                        },
+                        async: true,
+                        url: window.reportparam,
+                        success: function (result) {
+                            var data = Ext.decode(result.responseText);
+                            console.log(data.url);
+                            window.open(data.url);
+                        }, //success
+                        failure: function (result) {
+                            
+                        },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    });
+                    me.close();
+                } // end handler
+            }, {
+                iconCls: 'icon-cancel',
+                text: 'Cancel',
+                name: 'button-cancel',
+                handler: function (btn, evt) {
+                    me.intend = "cancel";
+                    me.close();
                 }
-            } // end handler
-        }, {
-            iconCls: 'icon-cancel',
-            text: 'Cancel',
-            name: 'button-cancel',
-            handler: function (btn, evt) {
-                me.intend = "cancel";
-                me.close();
-            }
-        }]
-    }); // end Ext.apply
-    MainReportWindow.superclass.initComponent.apply(me, arguments);
-} // end initComponent
-});      // end Ext.define('MainReportWindow
+            }]
+        }); // end Ext.apply
+        MainReportWindow.superclass.initComponent.apply(me, arguments);
+    } // end initComponent
+});                                      // end Ext.define('MainReportWindow
 
 
 MainReportWindow.prototype.filterConf = function (combo, mode) {
     var prefix = "quickconfwindow-";
-    //Ext.getCmp(prefix + 'principle-type').setValue("Conf");
-		
     this.getMonthFields().hide();
-	this.getCumulativeFields().hide();
-	
-	switch (combo.getValue()) {
-        case "month":
-            this.getMonthFields().show();
+    this.getCumulativeFields().hide();
+    this.getTRFields().hide();
+    this.getAgrStatusFields().hide();
+}
+
+MainReportWindow.prototype.setPravameter = function (reportid, prametername) {
+    var prefix = "quickconfwindow-";
+   
+    switch (prametername) {
+        case "StartDate":
+            Ext.getCmp(prefix + 'reportID').setValue(reportid);
+            Ext.getCmp(prefix + 'cumulativeFields').show();
             break;
-		case "cumulative":
-			this.getCumulativeFields().show();
-		default:
-	}
+        case "TR":
+            Ext.getCmp(prefix + 'trFields').show();
+        case "AgrStatus":
+            Ext.getCmp(prefix + 'agrStatusFields').show();
+        default:
+    }
 }
 
 MainReportWindow.prototype.getMonthFields = function () {
@@ -257,6 +341,15 @@ MainReportWindow.prototype.getCumulativeFields = function () {
     return Ext.getCmp(this.prefix + 'cumulativeFields');
 }
 
+MainReportWindow.prototype.getTRFields = function () {
+    return Ext.getCmp(this.prefix + 'trFields');
+}
+
+MainReportWindow.prototype.getAgrStatusFields = function () {
+    return Ext.getCmp(this.prefix + 'agrStatusFields');
+}
+
+
 /** [20140822] Thawatchai.T add setRecord to window popup 
 *    syntax set value 
 *    Ext.getCmp(UI ID).setvalue(value)
@@ -264,15 +357,8 @@ MainReportWindow.prototype.getCumulativeFields = function () {
 MainReportWindow.prototype.display = function (record) {
     var prefix = "quickconfwindow-";
     console.log(record);
-
-    var id = record.id;
-    //call url service get data 
-    //set data to panal
-    //do not something
-    //exe
-    console.log("hello");
-    console.log(id);
-    MainReportWindow.prototype.GetParameter(id);
+    Ext.getCmp(prefix + "ReportName").setValue(record.data.Reportfilename);
+    MainReportWindow.prototype.GetParameter(record.data.Id);
     if (true) {
         Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
         this.getCumulativeFields().show();
@@ -282,35 +368,40 @@ MainReportWindow.prototype.display = function (record) {
 
 MainReportWindow.prototype.mapping = function (e,v) {
     var prefix = "quickconfwindow-";
-    console.log(record);
-    var reportid = record.data.id
     
-//    if (true) {
-//        Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
-//        this.getCumulativeFields().show();
-//        this.getMonthFields().show();
-//    }
-
+    var reportid = record.data.id
 }
 
-MainReportWindow.prototype.GetParameter = function (id)
-{
+MainReportWindow.prototype.GetParameter = function (id) {
+
+    ids = { id: id };
+    console.log(id);
     Ext.Ajax.request({
-        type: "GET",
+        type: "Post",
         cache: false,
-        //data: id,
-        params:{
+        params: {
             id: id
         },
-        async: true,
         url: window.getParameterreport,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-            
+
             console.log(result);
+            var pararesult = Ext.decode(result.responseText);
+            console.log(pararesult);
+            var arr = []
+            var obj = {};
+            var ReportName = "";
+            Ext.each(pararesult.items, function (pr) {
+                obj = { name: pr.ParameterName }
+                arr.push(obj);
+               
+                MainReportWindow.prototype.setPravameter(pr.ReportID, pr.ParameterName);
+            });
+            Ext.getCmp('quickconfwindow-parameterName').setValue(Ext.encode(arr));
             
-            if (result.data.Success) {
+            if (pararesult.Success) {
 
             }
             else {
