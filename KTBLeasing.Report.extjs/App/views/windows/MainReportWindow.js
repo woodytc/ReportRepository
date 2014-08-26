@@ -354,8 +354,10 @@ MainReportWindow.prototype.setPravameter = function (reportid, prametername) {
             break;
         case "TR":
             Ext.getCmp(prefix + 'trFields').show();
+            break;
         case "AgrStatus":
             Ext.getCmp(prefix + 'agrStatusFields').show();
+            break;
         default:
     }
 }
