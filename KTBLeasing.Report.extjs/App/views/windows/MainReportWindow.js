@@ -293,7 +293,7 @@ Ext.define('MainReportWindow', {
 
                         me.close();
                     } else {
-                        Ext.MessageBox.alert('Data is valids!!',"Plase Check input data");
+                        Ext.MessageBox.alert('Data is valids!!',"Please Check input data");
                     }
                    
                 } // end handler
