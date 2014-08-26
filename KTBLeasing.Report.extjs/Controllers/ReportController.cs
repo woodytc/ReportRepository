@@ -31,7 +31,7 @@ namespace KTBLeasing.Report.extjs.Controllers
             Session["ReportParameters"] = ReportParameters;//rptparam.Parameter;// 
             Session["ReportName"] = ReportName; //rptparam.ReportName;//
             
-            return Json(new{url="../Reports/frmReportingServiceViewer.aspx"},JsonRequestBehavior.AllowGet);
+            return Json(new{url="../Reports/ReportViewer.aspx"},JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetReportByID()

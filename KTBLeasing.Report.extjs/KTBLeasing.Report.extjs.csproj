@@ -143,9 +143,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Reports\frmReportingServiceViewer.aspx.cs">
-      <DependentUpon>frmReportingServiceViewer.aspx</DependentUpon>
+    <Compile Include="Reports\ReportViewer.aspx.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportViewer.aspx.designer.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service References\WS_ActiveDirectory\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -417,7 +420,7 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Reports\frmReportingServiceViewer.aspx" />
+    <Content Include="Reports\ReportViewer.aspx" />
     <Content Include="Scripts\dhtmlx\dhtmlx.js" />
     <Content Include="Scripts\extjs\bootstrap.js" />
     <Content Include="Scripts\extjs\css\ext-all-access-debug.css" />
