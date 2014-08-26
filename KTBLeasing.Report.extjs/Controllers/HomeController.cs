@@ -9,6 +9,7 @@ using KTBLeasing.Domain.Repositoy;
 using KTBLeasing.Report.extjs.Models;
 using Microsoft.Reporting.WebForms;
 using KTBLeasing.Helpers;
+using System.Web.Security;
 
 namespace KTBLeasing.ReportWeb.Controllers
 {
@@ -31,6 +32,13 @@ namespace KTBLeasing.ReportWeb.Controllers
         
         public ActionResult Index()
         {
+            ViewBag.User = User.Identity.Name;
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "User");
+
+                
+            }
             return View();
         }
 
