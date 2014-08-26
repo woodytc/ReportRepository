@@ -182,15 +182,16 @@ Ext.define('MainReportWindow', {
                     fieldLabel: 'Start Date',
                     name: 'StartDate',
                     style: 'float: right',
-                    //**cls:'x-border-box, x-border-box',**
+                    afterLabelTextTpl: required, labelStyle: 'text-align: right',
                     id: me.prefix + 'StartDate',
                     padding: 5,
                     //width: 130,
                     //labelWidth: 30,
                     value: todate,
                     maxValue: today,
-                    format: "d.m.Y",
+                    format: "d-m-Y",
                     layout: 'form',
+                    allowBlank: false,
                     listeners: {
                         select: function (combo, value) {
                             todate = value;
@@ -200,9 +201,10 @@ Ext.define('MainReportWindow', {
                 },
 				{
 				    xtype: 'datefield',
+
 				    fieldLabel: 'End Date',
 				    style: 'float: right',
-				    //**cls:'x-border-box, x-border-box',**
+				    afterLabelTextTpl: required, labelStyle: 'text-align: right',
 				    //labelWidth: 50,
 				    //width: 150,
 				    name: 'EndDate',
@@ -210,8 +212,9 @@ Ext.define('MainReportWindow', {
 				    id: me.prefix + 'EndDate',
 				    value: fromdate,
 				    maxValue: today,
-				    format: "d.m.Y",
+				    format: "d-m-Y",
 				    layout: 'form',
+                    allowBlank: false,
 				    listeners: {
 				        select: function (combo, value) {
 				            fromdate = value;
@@ -227,7 +230,7 @@ Ext.define('MainReportWindow', {
         //Display
         Ext.apply(me, {
             iconCls: 'icon-details',
-            title: 'New Quick Deployment',
+            title: 'Report Parameter',
             y: 20,
             resizable: false,
             modal: true,
@@ -251,39 +254,48 @@ Ext.define('MainReportWindow', {
                 text: 'Save',
                 id: me.prefix + 'conf-button-save',
                 handler: function (btn, evt) {
-    
+
                     var dictionary = {}; //create new object
                     var dictionaryarr = [];
 
-                    Ext.each(Ext.decode(Ext.getCmp('quickconfwindow-parameterName').getValue()), function (pr) {
-                        dictionaryarr.push({ name: pr.name, value: Ext.getCmp(me.prefix + pr.name).getValue() });
-                    });
+                    var form = me.down('form').getForm();
+                    var isvalid = me.isValid();
 
+                    if (isvalid) {
 
-                    var ReportName = Ext.getCmp(me.prefix + 'ReportName').getValue();
-                    var paralist = { ReportName: ReportName, Parameter: dictionary }
-                    
-                    Ext.Ajax.request({
-                        type: "POST",
-                        cache: false,
-                        params: {
-                            reportname: Ext.encode(ReportName),
-                            paralist: Ext.encode(dictionaryarr)
-                        },
-                        async: true,
-                        url: window.reportparam,
-                        success: function (result) {
-                            var data = Ext.decode(result.responseText);
-                            console.log(data.url);
-                            window.open(data.url);
-                        }, //success
-                        failure: function (result) {
+                        Ext.each(Ext.decode(Ext.getCmp('quickconfwindow-parameterName').getValue()), function (pr) {
+                            dictionaryarr.push({ name: pr.name, value: Ext.getCmp(me.prefix + pr.name).getValue() });
+                        });
 
-                        },
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json"
-                    });
-                    me.close();
+                        var ReportName = Ext.getCmp(me.prefix + 'ReportName').getValue();
+                        var paralist = { ReportName: ReportName, Parameter: dictionary }
+
+                        Ext.Ajax.request({
+                            type: "POST",
+                            cache: false,
+                            params: {
+                                reportname: Ext.encode(ReportName),
+                                paralist: Ext.encode(dictionaryarr)
+                            },
+                            async: true,
+                            url: window.reportparam,
+                            success: function (result) {
+                                var data = Ext.decode(result.responseText);
+                                console.log(data.url);
+                                window.open(data.url);
+                            }, //success
+                            failure: function (result) {
+
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json"
+                        });
+
+                        me.close();
+                    } else {
+                        Ext.MessageBox.alert('Data is valids!!',"Plase Check input data");
+                    }
+                   
                 } // end handler
             }, {
                 iconCls: 'icon-cancel',
@@ -297,7 +309,32 @@ Ext.define('MainReportWindow', {
         }); // end Ext.apply
         MainReportWindow.superclass.initComponent.apply(me, arguments);
     } // end initComponent
-});   
+});
+
+MainReportWindow.prototype.isValid = function () {
+    var prefix = this.prefix;
+
+    var startdate = Ext.getCmp(prefix + 'StartDate').getValue()
+    var enddate = Ext.getCmp(prefix + 'EndDate').getValue()
+    
+    var form = Ext.getCmp(prefix + 'form-info');
+    for (var i = 0; i < form.items.length; i++) {
+        for (var j = 0; j < form.items.items[i].items.length; j++) {
+            if (form.items.items[i].hidden == false) {
+                var component = form.items.items[i].items.items[j];
+                if (component.xtype != "button") {
+                    if (startdate > enddate) return false;
+                    var vld = component.isValid();
+                    if (!vld) {
+                        return vld;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
 
 MainReportWindow.prototype.filterConf = function (combo, mode) {
     var prefix = "quickconfwindow-";
@@ -346,7 +383,6 @@ MainReportWindow.prototype.getAgrStatusFields = function () {
 */
 MainReportWindow.prototype.display = function (record) {
     var prefix = "quickconfwindow-";
-    console.log(record);
     Ext.getCmp(prefix + "ReportName").setValue(record.data.Reportfilename);
     MainReportWindow.prototype.GetParameter(record.data.Id);
     if (true) {
@@ -365,7 +401,6 @@ MainReportWindow.prototype.mapping = function (e,v) {
 MainReportWindow.prototype.GetParameter = function (id) {
 
     ids = { id: id };
-    console.log(id);
     Ext.Ajax.request({
         type: "Post",
         cache: false,
@@ -376,10 +411,9 @@ MainReportWindow.prototype.GetParameter = function (id) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
-
-            console.log(result);
+   
             var pararesult = Ext.decode(result.responseText);
-            console.log(pararesult);
+          
             var arr = []
             var obj = {};
             var ReportName = "";

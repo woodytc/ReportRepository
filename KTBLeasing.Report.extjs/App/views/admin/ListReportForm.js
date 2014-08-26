@@ -49,7 +49,7 @@
                                     fieldDefaults: { labelAlign: 'right' },
                                     labelStyle: 'text-align: right',
                                     items: [
-                                            { id: me.prefix + 'Name', name: 'Name', fieldLabel: 'ประเภททรัพย์สิน', labelStyle: 'text-align: right', emptyText: '[ชื่อประเภททรัพย์สิน]', anchor: '-100' }
+                                            { id: me.prefix + 'Name', name: 'Name', fieldLabel: 'ชื่อรายงาน', labelStyle: 'text-align: right', emptyText: '[ ชื่อรายงาน ]', anchor: '-100' }
                                     ]
                                 }
                         ]//end main item in header
@@ -85,12 +85,12 @@
                 //  autoScore: true,
                 region: 'center',
                 store: me.gridStore,
-                columnLines: true,
+                   columnLines: true,
                 columns: [
             { text: 'รหัสรายงาย', dataIndex: 'Id', width: '20%', sortable: false, align: 'center' },
-            { text: 'ชื่อรายงาน', dataIndex: 'Reportname', width: '40%', sortable: false, align: 'felt' },
+            { text: 'ชื่อรายงาน', dataIndex: 'Reportname', width: '60%', sortable: false, align: 'felt' }//,
 
-            { text: 'ชื่อรายงาน', dataIndex: 'Path', width: '20%', sortable: false, align: 'felt' }
+//            { text: 'ชื่อรายงาน', dataIndex: 'Path', width: '20%', sortable: false, align: 'felt' }
             ],
                 bbar: Ext.create('Ext.PagingToolbar', {
                     id: me.prefix + 'PagingToolbar',
