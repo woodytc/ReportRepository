@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Microsoft.Reporting.WebForms;
 using System.Collections;
 using KTBLeasing.Report.extjs.Helper;
+using KTBLeasing.Report.extjs.Properties;
 
 namespace KTBLeasing.Report.extjs.Reports
 {
@@ -39,10 +40,10 @@ namespace KTBLeasing.Report.extjs.Reports
                 var reportParameters = (Dictionary<string, string>)Session["ReportParameters"];
 
                 //Specify the server credentials
-                IReportServerCredentials irsc = new CustomReportCredentials("phutip_pr", "pomnot8", "ktbleasing");
+                IReportServerCredentials irsc = new CustomReportCredentials(Settings.Default.CredentialUser, Settings.Default.CredentialPassword, Settings.Default.CredentialDomain);
                 rptViewer.ServerReport.ReportServerCredentials = irsc;
 
-                if ((Dictionary<string, string>)Session["ReportParameters"] != null && !reportParameters.ContainsKey("null"))
+                if ((Dictionary<string, string>)Session["ReportParameters"] != null && !reportParameters.ContainsKey(string.Empty))
                     this.CreateReportParameter(reportParameters);
 
                 rptViewer.ServerReport.Refresh();

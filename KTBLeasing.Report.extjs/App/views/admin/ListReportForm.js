@@ -87,7 +87,7 @@
                 store: me.gridStore,
                    columnLines: true,
                 columns: [
-            { text: 'รหัสรายงาย', dataIndex: 'Id', width: '20%', sortable: false, align: 'center' },
+            { text: 'รหัสรายงาน', dataIndex: 'Id', width: '20%', sortable: false, align: 'center' },
             { text: 'ชื่อรายงาน', dataIndex: 'Reportname', width: '60%', sortable: false, align: 'felt' }//,
 
 //            { text: 'ชื่อรายงาน', dataIndex: 'Path', width: '20%', sortable: false, align: 'felt' }

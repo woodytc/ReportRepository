@@ -70,28 +70,10 @@ namespace KTBLeasing.Report.extjs.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Path {
-            get {
-                return ((string)(this["Path"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("sa")]
         public string UsernameDatabaseReport {
             get {
                 return ((string)(this["UsernameDatabaseReport"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sa")]
-        public string PasswordDatabaseReport {
-            get {
-                return ((string)(this["PasswordDatabaseReport"]));
             }
         }
         
@@ -115,7 +97,16 @@ namespace KTBLeasing.Report.extjs.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("221.23.21.38")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ktblitadmin")]
+        public string PasswordDatabaseReport {
+            get {
+                return ((string)(this["PasswordDatabaseReport"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("221.23.4.64")]
         public string ServerDatabaseReport {
             get {
                 return ((string)(this["ServerDatabaseReport"]));
@@ -124,10 +115,37 @@ namespace KTBLeasing.Report.extjs.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("FRONTHP_REPORT")]
+        [global::System.Configuration.DefaultSettingValueAttribute("KTBL_FL_REPORT")]
         public string SSRSReportPath {
             get {
                 return ((string)(this["SSRSReportPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ktbleasing")]
+        public string CredentialDomain {
+            get {
+                return ((string)(this["CredentialDomain"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("hpssrs")]
+        public string CredentialUser {
+            get {
+                return ((string)(this["CredentialUser"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("hpssrs")]
+        public string CredentialPassword {
+            get {
+                return ((string)(this["CredentialPassword"]));
             }
         }
     }

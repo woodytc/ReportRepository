@@ -17,13 +17,7 @@
     <Setting Name="ServerReporting" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Path" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="UsernameDatabaseReport" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">sa</Value>
-    </Setting>
-    <Setting Name="PasswordDatabaseReport" Type="System.String" Scope="Application">
       <Value Profile="(Default)">sa</Value>
     </Setting>
     <Setting Name="DatabaseReport" Type="System.String" Scope="Application">
@@ -32,11 +26,23 @@
     <Setting Name="SSRSReportServer" Type="System.String" Scope="Application">
       <Value Profile="(Default)">srv-ktblhp</Value>
     </Setting>
+    <Setting Name="PasswordDatabaseReport" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ktblitadmin</Value>
+    </Setting>
     <Setting Name="ServerDatabaseReport" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">221.23.21.38</Value>
+      <Value Profile="(Default)">221.23.4.64</Value>
     </Setting>
     <Setting Name="SSRSReportPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">FRONTHP_REPORT</Value>
+      <Value Profile="(Default)">KTBL_FL_REPORT</Value>
+    </Setting>
+    <Setting Name="CredentialDomain" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ktbleasing</Value>
+    </Setting>
+    <Setting Name="CredentialUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">hpssrs</Value>
+    </Setting>
+    <Setting Name="CredentialPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">hpssrs</Value>
     </Setting>
   </Settings>
 </SettingsFile>
