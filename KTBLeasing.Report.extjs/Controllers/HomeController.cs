@@ -128,8 +128,11 @@ namespace KTBLeasing.ReportWeb.Controllers
         public JsonResult GetAgrStatus()
         {
             var result = this.ReportRepository.GetAgrStatus();
-
-            return Json(new { items = result.Select(x => new { Name = x.AgrStsName, AgrStatus = x.AgrSts }), total = result.Count }, JsonRequestBehavior.AllowGet);
+            var filterresult = (from x in result select new { Name = (x.AgrSts == "A") ? x.AgrStsName : "รวม Close", AgrStatus = (x.AgrSts == "A") ? x.AgrSts : "" }).GroupBy(x => new { x.Name, x.AgrStatus }).Select(x => new { x.Key.Name, x.Key.AgrStatus }).ToList();
+            
+            
+            //return Json(new { items = result.Select(x => new { Name = x.AgrStsName, AgrStatus = x.AgrSts }), total = result.Count }, JsonRequestBehavior.AllowGet);
+            return Json(new { items = filterresult, total = filterresult.Count() }, JsonRequestBehavior.AllowGet);
         }
 
     }

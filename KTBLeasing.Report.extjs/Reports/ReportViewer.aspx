@@ -17,7 +17,7 @@
         <asp:Label ID="txtErrorMessage" runat="server" ForeColor="Red" Font-Size="13px" Text=""
             Style="text-align: left"></asp:Label>
         <rsweb:ReportViewer ID="rptViewer" runat="server" Width="100%" 
-            ShowParameterPrompts="False">
+            ShowParameterPrompts="False" Height="100%">
         </rsweb:ReportViewer>
     </div>
     </form>

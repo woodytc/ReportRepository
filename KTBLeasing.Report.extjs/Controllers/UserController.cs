@@ -61,16 +61,14 @@ namespace Creating_a_custom_user_login_form.Controllers
 
         public bool CheckAD(Models.User user)
         {
-            if (user.Password == "1")
-            {
-                return true;
-            }
-            else
-            {
-                LoginADRequest Request = new LoginADRequest(user.UserName, user.Password);
-                var result = _LoginService.LoginAD(Request);
-                return (result.@return.Equals("OK")) ? true : false;
-            }
+            //if (user.Password == "1")
+            //{
+            //    return true;
+            //}
+
+            LoginADRequest Request = new LoginADRequest(user.UserName, user.Password);
+            var result = _LoginService.LoginAD(Request);
+            return (result.@return.Equals("OK")) ? true : false;       
         }
     }
 }

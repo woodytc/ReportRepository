@@ -65,7 +65,8 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
         {
             using (var session = SessionFactory.OpenStatelessSession())
             {
-                var result = session.QueryOver<Report>().List() as List<Report>;
+                //var result = session.QueryOver<Report>().List() as List<Report>;
+                var result = (from x in session.QueryOver<Report>() where x.Isdelete == false select x).List() as List<Report>;
                 return result;
             }
         }
