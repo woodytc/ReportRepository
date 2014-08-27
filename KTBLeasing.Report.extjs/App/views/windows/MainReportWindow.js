@@ -250,8 +250,8 @@ Ext.define('MainReportWindow', {
             }],
             buttons: [
             {
-                iconCls: 'icon-save',
-                text: 'Save',
+                iconCls: 'icon-print',
+                text: 'Print Report',
                 id: me.prefix + 'conf-button-save',
                 handler: function (btn, evt) {
 
@@ -387,7 +387,7 @@ MainReportWindow.prototype.display = function (record) {
     var prefix = "quickconfwindow-";
     Ext.getCmp(prefix + "ReportName").setValue(record.data.Reportfilename);
     MainReportWindow.prototype.GetParameter(record.data.Id);
-    if (true) {
+    if (record.data.id !=1) {
         Ext.getCmp(prefix + 'parameter-type').setValue('cumulative');
         this.getCumulativeFields().show();
     }

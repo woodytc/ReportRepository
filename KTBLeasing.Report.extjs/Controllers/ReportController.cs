@@ -45,7 +45,7 @@ namespace KTBLeasing.Report.extjs.Controllers
         public JsonResult ViewReport(string reportname, string[] paralist)
         {
 
-            if (paralist.Count() > 0)
+            if (paralist.Count() > 0 && JsonConvert.DeserializeObject<string>(reportname) != "CustomizePivot")
             {
                 var listJsonResult = JsonConvert.DeserializeObject<List<ParaName>>(paralist[0]);
                 Dictionary<string, string> dicpara = new Dictionary<string, string>();
@@ -61,7 +61,7 @@ namespace KTBLeasing.Report.extjs.Controllers
                 Dictionary<string, string> dicpara = new Dictionary<string, string>();
                 dicpara.Add(string.Empty, string.Empty);
 
-                return SSRSReport(reportname, dicpara);
+                return SSRSReport(JsonConvert.DeserializeObject<string>(reportname), dicpara);
             }
         }
     }

@@ -216,6 +216,7 @@
     <Content Include="Content\icons\less_than.png" />
     <Content Include="Content\icons\loading.gif" />
     <Content Include="Content\icons\nowait.gif" />
+    <Content Include="Content\icons\print.gif" />
     <Content Include="Content\icons\refresh-blue.gif" />
     <Content Include="Content\icons\refresh-disabled.gif" />
     <Content Include="Content\icons\refresh.gif" />
