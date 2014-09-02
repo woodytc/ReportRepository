@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="AgrStatusMap.cs" />
     <Compile Include="BatchtbMap.cs" />
+    <Compile Include="MasterMappingEQPAndAssetTypeMapMap.cs" />
     <Compile Include="MasterAssetTypeMap.cs" />
     <Compile Include="MasterDepartmentMap.cs" />
     <Compile Include="MasterMappingCodeEQPMap.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="ReportMap.cs" />
     <Compile Include="ReportparameterMap.cs" />
     <Compile Include="Repository\BatchtbRepository.cs" />
+    <Compile Include="Repository\MasterMappingCodeEQPRepository.cs" />
     <Compile Include="Repository\MasterProvinceRepository.cs" />
     <Compile Include="Repository\MasterMappingCodeEQPMapRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
