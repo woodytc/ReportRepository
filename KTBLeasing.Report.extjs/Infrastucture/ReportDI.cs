@@ -28,7 +28,7 @@ namespace KTBLeasing.Report.extjs.Infrastucture
             kernel.Bind<WS_ActiveDirectory.IWS_LoginAD>().To<WS_ActiveDirectory.WS_LoginADClient>();
 
             kernel.Bind<IMasterAssetTypeRepository>()
-                .To<MasterAssetTypeRepository>()
+                .To<AssetTypeRepository>()
                 .WithPropertyValue("SessionFactory", kernel.Get<ISessionFactory>());
 
             //Report
@@ -37,13 +37,17 @@ namespace KTBLeasing.Report.extjs.Infrastucture
                 .WithPropertyValue("SessionFactory", CreateReportSessionFactory());
 
 
-            kernel.Bind<IMasterMappingCodeEQPMapRepository>()
-                .To<MasterMappingCodeEQPMapRepository>()
+            kernel.Bind<IMasterCodeEQPRepository>()
+                .To<EQPRepository>()
                 .WithPropertyValue("SessionFactory", kernel.Get<ISessionFactory>());
 
             kernel.Bind<IMasterProvinceRepository>()
                 .To<MasterProvinceRepository>()
                 .WithPropertyValue("SessionFactory", kernel.Get<ISessionFactory>());
+
+            kernel.Bind<IMasterMappingEQPAndAssetTypeRepository>()
+               .To<MappingAssetTypeRepository>()
+               .WithPropertyValue("SessionFactory", kernel.Get<ISessionFactory>());
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
 
@@ -60,7 +64,7 @@ namespace KTBLeasing.Report.extjs.Infrastucture
                 .Username(Settings.Default.UsernameDatabase)
                 .Password(Settings.Default.PasswordDatabase)
                 .Database(Settings.Default.Database)))
-                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<MasterAssetTypeMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<AssetTypeMap>())
                 .ExposeConfiguration(c => c.SetProperty("current_session_context_class", "thread_static"))
                 .BuildSessionFactory();
         }

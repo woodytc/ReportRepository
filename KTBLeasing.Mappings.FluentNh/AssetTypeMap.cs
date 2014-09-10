@@ -7,12 +7,12 @@ using KTBLeasing.Domain;
 namespace KTBLeasing.Mappings.FluentNh {
     
     
-    public class MasterAssetTypeMap : ClassMap<MasterAssetType> {
+    public class AssetTypeMap : ClassMap<MasterAssetType> {
         
-        public MasterAssetTypeMap() {
+        public AssetTypeMap() {
 			Table("MasterAssetType");
 			LazyLoad();
-			Id(x => x.Id).GeneratedBy.Identity().Column("ID");
+			Id(x => x.ID).GeneratedBy.Assigned().Column("ID");
 			Map(x => x.AssetType).Column("AssetType");
 			Map(x => x.Active).Column("Active");
 			Map(x => x.CreateDate).Column("CreateDate");

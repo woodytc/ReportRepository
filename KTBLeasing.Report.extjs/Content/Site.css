@@ -3,7 +3,13 @@ body
     font-size: 75%;
     font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;
     color: #232323;
-    background-color: #fff;
+    background-color: #3498DB;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          user-select: none;
 }
 
 /* Styles for basic forms
@@ -20,6 +26,7 @@ legend
 {
     font-size:1.2em;
     font-weight: bold;
+    color: white;
 }
 
 textarea 

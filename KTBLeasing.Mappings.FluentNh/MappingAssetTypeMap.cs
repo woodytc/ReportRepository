@@ -7,10 +7,10 @@ using KTBLeasing.Domain;
 namespace KTBLeasing.Mappings.FluentNh {
 
 
-    public class MasterMappingEQPAndAssetTypeMap : ClassMap<MasterMappingEQPAndAssetType>
+    public class MappingAssetTypeMap : ClassMap<MasterMappingEQPAndAssetType>
     {
 
-        public MasterMappingEQPAndAssetTypeMap()
+        public MappingAssetTypeMap()
         {
             Table("MasterMappingEQPAndAssetType");
             Id(x => x.ID).GeneratedBy.Identity().Column("ID");
@@ -18,7 +18,7 @@ namespace KTBLeasing.Mappings.FluentNh {
             Map(x => x.EQPCode).Column("EQPCode").Not.Nullable();
             Map(x => x.UpdateDate).Column("UpdateDate").Not.Nullable();
             Map(x => x.UpdateUser).Column("UpdateUser").Not.Nullable();
-
+            Map(x => x.IsDelete).Column("IsDelete").Not.Nullable();
         }
     }
 }

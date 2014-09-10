@@ -7,20 +7,22 @@ using KTBLeasing.Domain;
 namespace KTBLeasing.Mappings.FluentNh {
     
     
-    public class MasterMappingCodeEQPMap : ClassMap<MasterMappingCodeEQP> {
+    public class EQPMap : ClassMap<MasterCodeEQP> {
         
-        public MasterMappingCodeEQPMap() {
-            Table("MasterMappingCodeEQP");
-            Id(x => x.EQPCode).GeneratedBy.Identity().Column("EQPCode");
-            References(x => x.Masterassettype).Column("AssetCode");
-            Map(x => x.ComID).Column("ComID");
-            Map(x => x.EQPDescription).Column("EQPDesc");
+        public EQPMap() {
             //Table("MasterMappingCodeEQP");
             //LazyLoad();
             //Id(x => x.EQPCode).GeneratedBy.Identity().Column("EQPCode");
+            //Map(x => x.AssetCode).Column("AssetCode");
             //Map(x => x.ComID).Column("ComID");
             //Map(x => x.EQPDescription).Column("EQPDesc");
-            //Map(x => x.AssetCode).Column("AssetCode").Not.Nullable();
+            Table("MasterMappingCodeEQP");
+            LazyLoad();
+            Id(x => x.EQPCode).GeneratedBy.Assigned().Column("EQPCode");
+            //Id(x => x.EQPCode).Column("EQPCode");
+            Map(x => x.ComID).Column("ComID");
+            Map(x => x.EQPDescription).Column("EQPDesc");
+            Map(x => x.AssetCode).Column("AssetCode").Not.Nullable();
         }
     }
 }

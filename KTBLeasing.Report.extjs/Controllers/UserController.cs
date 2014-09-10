@@ -32,26 +32,35 @@ namespace Creating_a_custom_user_login_form.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Models.User user)
+        public JsonResult Login(Models.User user)
+        //public ActionResult Login(string username, string password)
         {
+            //var user = new Models.User
+            //{
+            //    UserName = username,
+            //    Password = password
+            //};
             if (ModelState.IsValid)
             {
                 if (this.CheckAD(user))
                 {
                     FormsAuthentication.SetAuthCookie(user.UserName, user.RememberMe);
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     ModelState.AddModelError("", "Login data is incorrect!");
+                    return Json(new { success = false, message = "Login data is incorrect!" }, JsonRequestBehavior.AllowGet);
                 }
             }
             else
             {
                 ModelState.AddModelError("", "Login data is incorrect!");
+                return Json(new { success = false, message = "Login data is incorrect!" }, JsonRequestBehavior.AllowGet);
             }
 
-            return RedirectToAction("Index", "User");
+            //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Logout()
         {

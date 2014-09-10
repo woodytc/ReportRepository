@@ -162,7 +162,9 @@
     <Content Include="App\controller\test\DeviceCommunicationController.js" />
     <Content Include="App\model\common\CommonModel.js" />
     <Content Include="App\model\common\stockModel.js" />
-    <Content Include="App\model\MasterMappingCodeEQPModel.js" />
+    <Content Include="App\model\AssetTypeModel.js" />
+    <Content Include="App\model\MappingAssetModel.js" />
+    <Content Include="App\model\EQPModel.js" />
     <Content Include="App\model\ReportModel.js" />
     <Content Include="App\model\test\BinRawData.js" />
     <Content Include="App\model\test\DailyBasis.js" />
@@ -187,11 +189,16 @@
     <Content Include="App\store\test\GpsFirstFixStore.js" />
     <Content Include="App\store\test\JourneySummaryStore.js" />
     <Content Include="App\store\test\RequestAckCommandStore.js" />
+    <Content Include="App\views\admin\AssetTypeForm.js" />
+    <Content Include="App\views\admin\MappingAssetTypeForm.js" />
     <Content Include="App\views\admin\ManageReportFrom.js" />
     <Content Include="App\views\admin\ListReportForm.js" />
-    <Content Include="App\views\admin\MappingCodeEQP.js" />
+    <Content Include="App\views\admin\EQPForm.js" />
     <Content Include="App\views\admin\sampletree.js" />
     <Content Include="App\views\List.js" />
+    <Content Include="App\views\windows\EQPWindow.js" />
+    <Content Include="App\views\windows\AssetTypeWindow.js" />
+    <Content Include="App\views\windows\ManageMappingAssetTypeWindow.js" />
     <Content Include="App\views\windows\MainReportWindow.js" />
     <Content Include="App\views\windows\EditManageReportWindow.js" />
     <Content Include="Content\container.swf" />
@@ -239,6 +246,7 @@
     <Content Include="Content\images\1306145460_facebook.png" />
     <Content Include="Content\images\1306145462_rss.png" />
     <Content Include="Content\images\1306172407_delicious.png" />
+    <Content Include="Content\images\bglogo.jpg" />
     <Content Include="Content\images\blockbullets.png" />
     <Content Include="Content\images\bottom.png" />
     <Content Include="Content\images\contentimage01-3.jpg" />

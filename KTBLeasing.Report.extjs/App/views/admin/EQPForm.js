@@ -1,8 +1,8 @@
-﻿Ext.define('ListReportForm', {
+﻿Ext.define('EQPForm', {
     extend: 'Ext.Panel',
     constructor: function (config) {
         var me = this;
-        var prefix = "ListReportForm-";
+        var prefix = "EQPForm-";
         me.prefix = prefix;
 
         //Define proxy datastore
@@ -13,7 +13,10 @@
                 root: 'items',
                 totalProperty: 'total'
             }, sorters: [{
-                property: 'Id',
+                property: 'AssetID',
+                direction: 'ASC'
+            }, {
+                property: 'EQPCode',
                 direction: 'ASC'
             }],
             simpleSortMode: true
@@ -22,22 +25,22 @@
         //Create datastore
         me.gridStore = Ext.create('Ext.data.JsonStore', {
             id: me.prefix + 'gridStore',
+            groupField: 'EQPCode',
             pageSize: 25,
-            model: 'Report.model.ReportModel',
-            //Filed: ['Id', 'Name'],
+            model: 'EQPModel',
             proxy: proxyOptions
         });
-
+        
         Ext.apply(this, {
             iconCls: 'icon-tabs',
-            title: 'แสดงรายงาน',
+            title: 'รายการทรัพย์สิน',
             layout: 'border',
             autoScroll: true,
             border: true,
             items: [
                     {
                         xtype: 'panel',
-                        title: 'บริหารจัดการรายงาน',
+                        title: 'บริหารจัดการทรัพย์สิน',
                         bodyStyle: 'padding:5px 5px 0',
                         region: 'north',
                         border: true,
@@ -52,7 +55,7 @@
                                     fieldDefaults: { labelAlign: 'right' },
                                     labelStyle: 'text-align: right',
                                     items: [
-                                            { id: me.prefix + 'Name', name: 'Name', fieldLabel: 'ชื่อรายงาน', labelStyle: 'text-align: right', emptyText: '[ ชื่อรายงาน ]', anchor: '-100' }
+                                            { id: me.prefix + 'Name', name: 'Name', fieldLabel: 'ประเภททรัพย์', labelStyle: 'text-align: right', emptyText: '[ ประเภททรัพย์ ]', anchor: '-100' }
                                     ]
                                 }
                         ]//end main item in header
@@ -67,7 +70,7 @@
 
                                         me.Name = Ext.getCmp(me.prefix + 'Name').getValue();
 
-                                        me.search(window.gridReportData, me.Name);
+                                        me.search(window.GridGetEQP, me.Name);
                                     } // end handler
                                 }, {
                                     iconCls: 'icon-reload',
@@ -83,24 +86,23 @@
             , {
                 xtype: 'grid',
                 id: me.prefix + 'grid',
-                title: 'รายชื่อรายงาน',
+                title: 'รายการทรัพย์สิน',
                 columnLines: true,
                 //  autoScore: true,
                 region: 'center',
                 store: me.gridStore,
                 columnLines: true,
+                selModel: Ext.create('Ext.selection.CheckboxModel'),
                 columns: [
-            { text: 'รหัสรายงาน', dataIndex: 'Id', width: '20%', sortable: true, align: 'center' },
-            { text: 'ชื่อรายงาน', dataIndex: 'Reportname', width: '60%', sortable: true, align: 'felt' }//,
-
-//            { text: 'ชื่อรายงาน', dataIndex: 'Path', width: '20%', sortable: false, align: 'felt' }
+            { text: 'รหัสทรัพย์สิน', dataIndex: 'EQPCode', width: '10%', sortable: true, align: 'felt' },
+            { text: 'ชื่อทรัพย์สิน', dataIndex: 'EQPDescription', flex: 1, sortable: true, align: 'felt' }
             ],
                 bbar: Ext.create('Ext.PagingToolbar', {
                     id: me.prefix + 'PagingToolbar',
                     store: me.gridStore
             , displayInfo: true
-            , displayMsg: 'รายงาน {0} - {1} of {2}'
-            , emptyMsg: "ไม่มี รายงาน"
+            , displayMsg: 'รายการทรัพย์สิน {0} - {1} จากทั้งหมด {2}'
+            , emptyMsg: "ไม่มี รายการทรัพย์สิน"
                 }),
                 viewConfig: {
                     listeners: {
@@ -112,57 +114,92 @@
             {
                 xtype: 'toolbar',
                 items: [{
-                    iconCls: 'icon-details',
-                    text: 'แสดงรายงาน',
-                    tooltip: 'แสดงรายงาน',
+                    iconCls: 'icon-edit',
+                    text: 'แก้ไข',
+                    tooltip: 'แก้ไขรายการทรัพย์สิน',
                     disabled: false,
                     handler: function (btn, evt) {
                         var gridpanel = btn.up().up();
                         var recordSelected = gridpanel.getSelectionModel().getSelection();
-                        if (recordSelected.length == 1) {
-
-//                       me.popUpEditItem(gridpanel, recordSelected[0], btn);
+                        if (recordSelected.length > 0) {
+                            me.popUpEditItem(gridpanel, recordSelected[0], btn);
                         }
+                    } //end handler
+                },
+                {
+                    iconCls: 'icon-delete',
+                    text: 'ลบ',
+                    tooltip: 'ลบรายการทรัพย์สิน',
+                    disabled: false,
+                    handler: function (btn, evt) {
+                        var gridpanel = btn.up().up();
+                        var recordSelected = gridpanel.getSelectionModel().getSelection();
+                        if (recordSelected.length > 0) {
+                            Ext.MessageBox.confirm('Confirm', 'คุณต้องการลบรายการทรัพย์สินหรือไม่ ?', function (e) {
+                                if (e == 'yes')
+                                    me.deleteListReport(gridpanel, recordSelected, btn);
+                            });
+                        }
+                    } //end handler
+                }, '->',
+                {
+                    iconCls: 'icon-add',
+                    text: 'เพิ่ม',
+                    tooltip: 'เพิ่มรายการทรัพย์สิน',
+                    disabled: false,
+                    handler: function (btn, evt) {
+                        me.Insert();
                     } //end handler
                 }] // end items
             }]//end dockedItems
             }//end grid
 
-            ]//end item
+            ]//end itme
         }); //end apply
         //me.gridStore.setpro
-        ListReportForm.superclass.constructor.apply(this, arguments);
+        EQPForm.superclass.constructor.apply(this, arguments);
     } // end constructor
 });
 
 //fn update
-ListReportForm.prototype.popUpEditItem = function (dataview, record, parent, mode) {
-    
+EQPForm.prototype.popUpEditItem = function (dataview, record, parent, mode) {
     /* [20140822] Thawatchai.T send data to window popup */
-    var quickConfWindow = new MainReportWindow(
+    var quickConfWindow = new EQPWindow(
                             {
                                 listeners: {
                                     close: function (panel, eOpts) {
                                         if (panel.intend === 'save-success') {
-                                            console.log('insave success');
-                                            //me.search(window.gridCatelogyData, me.username);
+                                            EQPForm.prototype.search(window.GridGetEQP, "");
+                                            quickConfWindow.destroy(panel);
+                                            quickConfWindow.destroy(mode);
                                         }
                                     }
                                 }
                             });
+    quickConfWindow.url = window.UpdateEQP;
     quickConfWindow.display(record);
     quickConfWindow.show();
 };
-
+EQPForm.prototype.Insert = function () { 0
+    var quickConfWindow = new EQPWindow(
+                            {
+                                listeners: {
+                                    close: function (panel, eOpts) {
+                                        if (panel.intend === 'save-success') {
+                                            EQPForm.prototype.search(window.GridGetEQP, "");
+                                            quickConfWindow.destroy(panel);
+                                        }
+                                    }
+                                }
+                            });
+    quickConfWindow.url = window.CreateEQP;
+    quickConfWindow.show();
+};
 //fn search
-ListReportForm.prototype.search = function (url, name) {
-    var prefix = 'ListReportForm-';
-    console.log("search");
+EQPForm.prototype.search = function (url, name) {
+    var prefix = 'EQPForm-';
     var quickStore = Ext.getStore(prefix + 'gridStore');
-    
-    console.log(quickStore);
-    console.log(url);
-    console.log(name);
+
     quickStore.proxy.url = url;
     quickStore.getProxy().extraParams.Name = name;
     var pagingToolbar = Ext.getCmp(prefix + 'PagingToolbar');
@@ -170,84 +207,17 @@ ListReportForm.prototype.search = function (url, name) {
 
 };
 
-//popup window updatefrom
-ListReportForm.prototype.popUpEditListReport = function (id, name) {
-    var prefix = 'updateListReport-';
-    var url = window.updateListReport;
-    var required = '<span style="ListReport:red;font-weight:bold" data-qtip="Required">*</span>';
-    
-    var win = new Ext.Window({
-        id: prefix + 'update',
-        iconCls: 'icon-details',
-        title: 'ปรับปรุงประเภททรัพย์สิน',
-        y: 20,
-        width    :500,
-        //height   :args.height * 1.0 ||200,
-        resizable: false,
-        modal: true,
-        buttonAlign: 'center',
-        //            autoScroll: true,
-        layout: 'vbox',
-        xtype: 'fieldset',
-        defaultType: 'textfield',
-        //layout: { type: 'table', columns: 1 },
-        defaults: { style: 'margin:2px 5px;', labelWidth: 170 },
-        items: [
-                { id: prefix + 'ID', name: 'ID', fieldLabel: 'รหัส', labelStyle: 'text-align: right'
-                    , afterLabelTextTpl: required, xtype: 'textfield', fieldStyle: 'text-align: right', allowBlank: false,readOnly:true},
-                { id: prefix + 'name', name: 'name', fieldLabel: 'ชื่อประเภททรัพย์สิน', labelStyle: 'text-align: right'
-                    , afterLabelTextTpl: required, xtype: 'textfield', fieldStyle: 'text-align: right', allowBlank: false }
-                ],
-        buttons: [{
-            text: 'ปรับปรุง',
-            onClick: function (button) {
-                
-                Ext.Ajax.request({
-                    method: 'post',
-                    url: url,
-                    params: {
-                                ID: Ext.getCmp(prefix + 'ID').getValue(),
-                                name: Ext.getCmp(prefix + 'name').getValue()
-                            },
-                    success: function (response) {
-                        var text = response.responseText;
-                        Ext.MessageBox.alert('Status', 'เปลื่ยนแปลงประเภททรัพย์สินเรียบร้อยแล้ว');
-                        ListReportForm.prototype.search(window.gridListReportData, "");
-                    }
-                });
-
-                win.destroy();
-
-            }
-        },
-                {
-                    iconCls: 'icon-cancel',
-                    text: 'ยกเลิก',
-                    name: 'button-cancel',
-                    handler: function (btn, evt) {
-                        intend = "cancel";
-                        win.destroy();
-                    }
-                }]
-    }).show();
-//set data
-    Ext.getCmp(prefix + 'name').setValue(name);
-    Ext.getCmp(prefix + 'ID').setValue(id);
-}
-
-
 //delete ListReport
-ListReportForm.prototype.deleteListReport = function (dataview, reconds, type) {
+EQPForm.prototype.deleteListReport = function (dataview, record, type) {
     var ListReportIds = [];
-    for (var i = 0; i < reconds.length; i++) {
-        var id = reconds[i].get('Id');
-        //console.log(id);
+    for (var i = 0; i < record.length; i++) {
+        var id = record[i].data.EQPCode;
         ListReportIds.push(id);
     }
-    var method = window.deleteListReport;
-    
+    var method = window.DeleteEQP;
+
     Ext.MessageBox.show({
-        msg: 'Please wait update status items...',
+        msg: 'กำลังประมวลผล ...',
         width: 300,
         closable: false
     });
@@ -264,13 +234,19 @@ ListReportForm.prototype.deleteListReport = function (dataview, reconds, type) {
         success: function (result) {
             Ext.MessageBox.hide();
             var me = this
-            me.url = window.gridListReportData
+            me.url = window.gridmappingasset;
             if (result.success) {
                 Ext.MessageBox.alert('Status', result.message);
-                ListReportForm.prototype.search(me.url,"");
+                EQPForm.prototype.search(me.url, "");
             }
             else {
-                Ext.MessageBox.alert('Status', "Error: " + result.message);
+                //Ext.MessageBox.alert('Status', "Error: " + result.message);
+                Ext.MessageBox.alert({
+                    title: 'Warning', //<- the dialog's title
+                    msg: 'ข้อมูลมีการ Mapping อยู่ ' + result.message, //<- the message
+                    buttons: Ext.Msg.YES, //<- YES and NO buttons
+                    icon: Ext.Msg.WARNING, // <- error icon
+                });
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

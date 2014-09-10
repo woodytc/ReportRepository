@@ -8,9 +8,10 @@ namespace KTBLeasing.Domain.Repositoy
 {
     public interface IMasterAssetTypeRepository
     {
-        void Insert(MasterAssetType entity);
-        void Update(MasterAssetType entity);
-        void SaveOrUpdate(MasterAssetType entity);
+        bool Insert(MasterAssetType entity);
+        bool Update(MasterAssetType entity);
+        bool SaveOrUpdate(MasterAssetType entity);
+        bool Delete(List<int> entity);
         List<MasterAssetType> Get();
     }
 }

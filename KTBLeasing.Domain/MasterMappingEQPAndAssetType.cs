@@ -13,5 +13,7 @@ namespace KTBLeasing.Domain {
       public virtual int AssetID {get;set;}
       public virtual DateTime UpdateDate {get;set;}
       public virtual string UpdateUser { get; set; }
+
+      public virtual bool IsDelete { get; set; }
     }
 }

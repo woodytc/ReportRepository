@@ -1,7 +1,7 @@
 ﻿Ext.define('Report.model.ReportModel', {
     extend: 'Ext.data.Model'
         , fields: [
-           'Id',
+           { name: 'Id', type: 'int' },
            'Reportname',
            'Reportfilename',
            'Path',

@@ -12,7 +12,7 @@ namespace KTBLeasing.Domain {
         private DateTime? _createdate;
         private DateTime? _updatedate;
         public MasterAssetType() { }
-        public virtual int Id {
+        public virtual int ID {
             get {
                 return this._id;
             }

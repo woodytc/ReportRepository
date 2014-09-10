@@ -1,6 +1,4 @@
-﻿
-
-Ext.define('MainReportWindow', {
+﻿Ext.define('MainReportWindow', {
     extend: 'Ext.Window',
     initComponent: function () {
         var me = this;
@@ -31,7 +29,7 @@ Ext.define('MainReportWindow', {
             data: [
                     { name: 'T', value: 'T' },
                     { name: 'R', value: 'R' },
-                    { name: 'not tr', value: '' }
+                    { name: 'Not TR', value: '' }
                 ]
         });
 
@@ -93,7 +91,7 @@ Ext.define('MainReportWindow', {
             defaultType: 'textfield',
             hidden: true,
             layout: { type: 'table', columns: 2 },
-            defaults: { style: 'margin:2px 5px;', labelWidth: 170 },
+            defaults: { style: 'margin:10px 10px 10px 10px;', labelWidth: 170 },
             items: [
                 { id: me.prefix + 'parameter-type', name: 'ConfigurationType', xtype: 'combo', mode: 'local', editable: false, width: 600
                     , fieldLabel: 'Parameter Type', displayField: 'name', valueField: 'value', queryMode: 'local', anchor: '-10'
@@ -139,7 +137,7 @@ Ext.define('MainReportWindow', {
             xtype: 'fieldset',
             defaultType: 'textfield',
             layout: { type: 'table', columns: 1 },
-            defaults: { style: 'margin:2px 5px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
+            defaults: { style: 'margin:10px 10px 10px 10px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
             items: [
                     { id: prefix + 'TR', name: 'TR', xtype: 'combo', mode: 'local', editable: false, displayField: 'name', valueField: 'value'
                             , queryMode: 'local', allowBlank: false, emptyText: 'selected'
@@ -155,7 +153,7 @@ Ext.define('MainReportWindow', {
             xtype: 'fieldset',
             defaultType: 'textfield',
             layout: { type: 'table', columns: 1 },
-            defaults: { style: 'margin:2px 5px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
+            defaults: { style: 'margin:10px 10px 10px 10px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
             items: [
                 { id: prefix + 'AgrStatus', name: 'AgrStatus', xtype: 'combo', mode: 'local', editable: false, displayField: 'Name', valueField: 'AgrStatus'
                         , queryMode: 'local', allowBlank: false, emptyText: 'selected'
@@ -175,7 +173,7 @@ Ext.define('MainReportWindow', {
             xtype: 'fieldset',
             defaultType: 'textfield',
             layout: { type: 'table', columns: 2 },
-            defaults: { style: 'margin:2px 5px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
+            defaults: { style: 'margin:10px 10px 10px 10px;', labelWidth: 170, fieldStyle: 'text-align: right;' },
             items: [
                 {
                     xtype: 'datefield',
@@ -245,7 +243,7 @@ Ext.define('MainReportWindow', {
                 defaultType: 'textfield',
                 buttonAlign: 'center',
                 autoScroll: true,
-                defaults: { style: 'margin:5px 5px 2px 10px;', labelWidth: 180, anchor: '100%' },
+                defaults: { style: 'margin:10px 10px 10px 10px;', labelWidth: 180, anchor: '100%' },
                 items: [mainParameterFields, monthFields, cumulativeFields, trFields, agrStatusFields]
             }],
             buttons: [

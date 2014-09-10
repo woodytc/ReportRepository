@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace KTBLeasing.Domain {
     
-    public class MasterMappingCodeEQP {
-        public MasterMappingCodeEQP() { }
+    public class MasterCodeEQP {
+        public MasterCodeEQP() { }
         private int _eqpcode;
         private string _comid;
         private string _eqpdesc;
         private int _assetcode;
-        private MasterAssetType _masterassettype;
+        //private MasterAssetType _masterassettype;
         public virtual int EQPCode {
             get {
                 return this._eqpcode;
@@ -48,14 +48,14 @@ namespace KTBLeasing.Domain {
         }
 
 
-        public virtual MasterAssetType Masterassettype
-        {
-            get {
-                return this._masterassettype;
-            }
-            set {
-                this._masterassettype = value;
-            }
-        }
+        //public virtual MasterAssetType Masterassettype
+        //{
+        //    get {
+        //        return this._masterassettype;
+        //    }
+        //    set {
+        //        this._masterassettype = value;
+        //    }
+        //}
     }
 }

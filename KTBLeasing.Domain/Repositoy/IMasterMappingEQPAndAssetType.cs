@@ -12,6 +12,7 @@ namespace KTBLeasing.Domain.Repositoy
         void Insert(MasterMappingEQPAndAssetType entity);
         void Update(MasterMappingEQPAndAssetType entity);
         void SaveOrUpdate(MasterMappingEQPAndAssetType entity);
+        void Delete(List<int> entity);
         List<MasterMappingEQPAndAssetType> Get();
         List<AssetTypeMappingModel> GetMappingAssetTypeList();
     }

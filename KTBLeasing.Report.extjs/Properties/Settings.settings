@@ -2,17 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KTBLeasing.Report.extjs.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ServerDatabase" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">221.23.0.25</Value>
-    </Setting>
     <Setting Name="UsernameDatabase" Type="System.String" Scope="Application">
       <Value Profile="(Default)">sa</Value>
     </Setting>
     <Setting Name="PasswordDatabase" Type="System.String" Scope="Application">
       <Value Profile="(Default)">ktblitadmin</Value>
-    </Setting>
-    <Setting Name="Database" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">BatchTB</Value>
     </Setting>
     <Setting Name="ServerReporting" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
@@ -43,6 +37,12 @@
     </Setting>
     <Setting Name="CredentialPassword" Type="System.String" Scope="Application">
       <Value Profile="(Default)">hpssrs</Value>
+    </Setting>
+    <Setting Name="ServerDatabase" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">221.23.4.79</Value>
+    </Setting>
+    <Setting Name="Database" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">BatchTB1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

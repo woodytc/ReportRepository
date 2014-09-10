@@ -10,6 +10,8 @@ using KTBLeasing.Report.extjs.Models;
 using Microsoft.Reporting.WebForms;
 using KTBLeasing.Helpers;
 using System.Web.Security;
+using Newtonsoft.Json;
+using KTBLeasing.Domain.Model;
 
 namespace KTBLeasing.ReportWeb.Controllers
 {
@@ -17,15 +19,20 @@ namespace KTBLeasing.ReportWeb.Controllers
     {
         private IReportRepository ReportRepository { get; set; }
         private IMasterProvinceRepository ProvinceRepository { get; set; }
-        private IMasterMappingCodeEQPMapRepository EPQMapAssetTypeREpository { get; set; }
+        private IMasterCodeEQPRepository MasterCodeEQPRepository { get; set; }
+        private IMasterMappingEQPAndAssetTypeRepository MasterMappingEQPAndAssetTypeRepository { get; set; }
+        private IMasterAssetTypeRepository MasterAssetTypeRepository { get; set; }
 
         public HomeController(IReportRepository reportRepository, IMasterProvinceRepository masterProvinceRepository,
-            IMasterMappingCodeEQPMapRepository masterMappingCodeEQPMapRepository)
+            IMasterCodeEQPRepository masterCodeEQPRepository, 
+            IMasterMappingEQPAndAssetTypeRepository masterMappingEQPAndAssetTypeRepository,
+            IMasterAssetTypeRepository MasterAssetTypeRepository)
         {
             this.ReportRepository = reportRepository;
             this.ProvinceRepository = masterProvinceRepository;
-            this.EPQMapAssetTypeREpository = masterMappingCodeEQPMapRepository;
-            
+            this.MasterCodeEQPRepository = masterCodeEQPRepository;
+            this.MasterMappingEQPAndAssetTypeRepository = masterMappingEQPAndAssetTypeRepository;
+            this.MasterAssetTypeRepository = MasterAssetTypeRepository;
         }
         //
         // GET: /Home/
@@ -36,8 +43,6 @@ namespace KTBLeasing.ReportWeb.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "User");
-
-                
             }
             return View();
         }
@@ -91,6 +96,173 @@ namespace KTBLeasing.ReportWeb.Controllers
             }
             return null;
         }
+        public JsonResult CreateMappingAsset(FormCollection entity)
+        {
+            try
+            {
+                var AssetID = entity["AssetID"];
+                var listGird = entity["listGird"];
+
+                var listJsonResult = JsonConvert.DeserializeObject<List<AssetTypeMappingModel>>(listGird);
+                listJsonResult.ForEach(x =>
+                {
+                    x.AssetID = (!string.IsNullOrEmpty(AssetID)) ? int.Parse(AssetID) : 0;
+                    MasterMappingEQPAndAssetType mapEntity = new MasterMappingEQPAndAssetType
+                    {
+                        ID = x.ID,
+                        AssetID = x.AssetID,
+                        EQPCode = x.EQPCode,
+                        IsDelete = x.IsDelete,
+                        UpdateDate = x.UpdateDate,
+                        UpdateUser = User.Identity.Name
+                    };
+                    this.MasterMappingEQPAndAssetTypeRepository.SaveOrUpdate(mapEntity);
+
+                });
+                return Json(new { success = true, message = "บันทึกข้อมูลสำเร็จ" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult DeleteMappingAsset(List<int> entity)
+        {
+            try
+            {
+                this.MasterMappingEQPAndAssetTypeRepository.Delete(entity);
+                return Json(new { success = true, message = "ลบข้อมูลสำเร็จ" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+
+                return Json(new { success = false, message = "ไม่สามารถลบข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult CreateEQP(FormCollection entity)
+        {
+            try
+            {
+                var EQPCode = int.Parse(entity["EQPCode"]);
+                var EQPDescription = entity["EQPDescription"];
+
+                MasterCodeEQP _objMasterCodeEQP = new MasterCodeEQP
+                {
+                    EQPCode = EQPCode,
+                    AssetCode = 11,
+                    ComID = "1",
+                    EQPDescription = EQPDescription
+                };
+
+                var status = this.MasterCodeEQPRepository.Insert(_objMasterCodeEQP);
+                return Json(new { success = status, message = (status) ? "บันทึกข้อมูลสำเร็จ" : "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult UpdateEQP(FormCollection entity)
+        {
+            try
+            {
+                var EQPCode = int.Parse(entity["EQPCode"]);
+                var EQPDescription = entity["EQPDescription"];
+
+                MasterCodeEQP _objMasterCodeEQP = new MasterCodeEQP
+                {
+                    EQPCode = EQPCode,
+                    AssetCode = 11,
+                    ComID = "1",
+                    EQPDescription = EQPDescription
+                };
+
+                var status = this.MasterCodeEQPRepository.Update(_objMasterCodeEQP);
+                return Json(new { success = status, message = (status) ? "บันทึกข้อมูลสำเร็จ" : "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult DeleteEQP(List<int> entity)
+        {
+            try
+            {
+                var status = this.MasterCodeEQPRepository.Delete(entity);
+                return Json(new { success = status, message = (status) ? "ลบข้อมูลสำเร็จ" : "ไม่สามารถลบข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+
+                return Json(new { success = false, message = "ไม่สามารถลบข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return null;
+        }
+
+        public JsonResult CreateAssetType(FormCollection entity)
+        {
+            try
+            {
+                var ID = int.Parse(entity["ID"]);
+                var AssetType = entity["AssetType"];
+
+                MasterAssetType _objMasterAssetType = new MasterAssetType
+                {
+                    ID = ID,
+                    AssetType = AssetType,
+                };
+
+                var status = this.MasterAssetTypeRepository.Insert(_objMasterAssetType);
+                return Json(new { success = status, message = (status) ? "บันทึกข้อมูลสำเร็จ" : "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult UpdateAssetType(FormCollection entity)
+        {
+            try
+            {
+                var ID = int.Parse(entity["ID"]);
+                var AssetType = entity["AssetType"];
+
+                MasterAssetType _objMasterAssetType = new MasterAssetType
+                {
+                    ID = ID,
+                    AssetType = AssetType,
+                };
+
+                var status = this.MasterAssetTypeRepository.Update(_objMasterAssetType);
+                return Json(new { success = status, message = (status) ? "บันทึกข้อมูลสำเร็จ" : "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { success = false, message = "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult DeleteAssetType(List<int> entity)
+        {
+            try
+            {
+                var status = this.MasterAssetTypeRepository.Delete(entity);
+                return Json(new { success = status, message = (status) ? "ลบข้อมูลสำเร็จ" : "ไม่สามารถลบข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+
+                return Json(new { success = false, message = "ไม่สามารถลบข้อมูลได้" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #endregion
 
 
@@ -100,12 +272,35 @@ namespace KTBLeasing.ReportWeb.Controllers
         
         public JsonResult GridReport(string Name = "")
         {
-            var result = ReportRepository.Get();
+            var result = ReportRepository.Get().OrderBy(x => x.Id).ToList<KTBLeasing.Domain.Report>();
             result = (String.IsNullOrEmpty(Name)) ? result : result.Where<KTBLeasing.Domain.Report>(x => x.Reportname.Contains(Name)).ToList<KTBLeasing.Domain.Report>();
             return Json(new { items = result, total = result.Count() }, JsonRequestBehavior.AllowGet);
         }
 
+        /** [20140902] by pom **/
+        public JsonResult GridMappingAsset(string Name = "",int start=0, int limit=0)
+        {
+            var result = this.MasterMappingEQPAndAssetTypeRepository.GetMappingAssetTypeList()
+                            .Where(x => x.EQPDescription.Contains(Name.ToLower()) || x.AssetType.Contains(Name.ToLower()));
+            var page = (start == 0 && limit == 0) ? result : result.Skip(start).Take(limit);
 
+            return Json(new { items = page, total = result.Count() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GridGetEQP(string Name = "", int start = 0, int limit = 0)
+        {
+            var result = this.MasterCodeEQPRepository.Get().Select(x=>new{x.EQPCode,x.EQPDescription,x.ComID});
+            var page = (start == 0 && limit == 0) ? result : result.Skip(start).Take(limit);
+
+            return Json(new { items = page, total = result.Count() }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GridAssetType(string Name = "", int start = 0, int limit = 0)
+        {
+            var result = this.MasterAssetTypeRepository.Get().Where(x=>x.AssetType.ToLower().Contains(Name.ToLower()));
+            var page = (start == 0 && limit == 0) ? result : result.Skip(start).Take(limit);
+
+            return Json(new { items = page, total = result.Count() }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GridReportPage(int start, int limit, string direction)
         {
             string xss = "";
@@ -114,6 +309,13 @@ namespace KTBLeasing.ReportWeb.Controllers
         }
         #endregion
 
+        #region Combobox data
+        public JsonResult GetMasterAssetType()
+        {
+            var result = this.MasterAssetTypeRepository.Get().Select(x => new { name = x.ID, value = x.AssetType });
+            return Json(new { items = result, total = result.Count()}, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
 
         /**[20140822] Thawatchai.T Get parameter report by report id*/
         public JsonResult GetParameterReport(int id)
@@ -123,7 +325,6 @@ namespace KTBLeasing.ReportWeb.Controllers
 
             return Json(new { items = paraname, total = paraname.Count(), success=(paraname.Count()>0)?true:false }, JsonRequestBehavior.AllowGet);
         }
-
         /** [20140825] Thawatchai.T getComboParameter report AGRStauts */
         public JsonResult GetAgrStatus()
         {

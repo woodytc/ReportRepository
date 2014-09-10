@@ -74,10 +74,10 @@
   <ItemGroup>
     <Compile Include="AgrStatusMap.cs" />
     <Compile Include="BatchtbMap.cs" />
-    <Compile Include="MasterMappingEQPAndAssetTypeMapMap.cs" />
-    <Compile Include="MasterAssetTypeMap.cs" />
+    <Compile Include="MappingAssetTypeMap.cs" />
+    <Compile Include="AssetTypeMap.cs" />
     <Compile Include="MasterDepartmentMap.cs" />
-    <Compile Include="MasterMappingCodeEQPMap.cs" />
+    <Compile Include="EQPMap.cs" />
     <Compile Include="MasterRegionMap.cs" />
     <Compile Include="MasterProvinceMap.cs" />
     <Compile Include="NhRepository.cs" />
@@ -86,11 +86,11 @@
     <Compile Include="ReportMap.cs" />
     <Compile Include="ReportparameterMap.cs" />
     <Compile Include="Repository\BatchtbRepository.cs" />
-    <Compile Include="Repository\MasterMappingCodeEQPRepository.cs" />
+    <Compile Include="Repository\MappingAssetTypeRepository.cs" />
     <Compile Include="Repository\MasterProvinceRepository.cs" />
-    <Compile Include="Repository\MasterMappingCodeEQPMapRepository.cs" />
+    <Compile Include="Repository\EQPRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
-    <Compile Include="Repository\MasterAssetTypeRepository.cs" />
+    <Compile Include="Repository\AssetTypeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\Antlr3.Runtime.dll" />

@@ -3,31 +3,95 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
-@using (Html.BeginForm("Login","User"))
+@using (Html.BeginForm("Login", "User"))
 {
     @Html.ValidationSummary(true, "Login failed. Check your login details.");
-    <div>
-        <fieldset>
-            <legend>Login</legend>
-            <div class="editor-label">
-                @Html.LabelFor(u => u.UserName)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(u => u.UserName)
-                @Html.ValidationMessageFor(u => u.UserName)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(u => u.Password)
-            </div>
-            <div class="editor-field">
-                @Html.PasswordFor(u => u.Password)
-                @Html.ValidationMessageFor(u => u.Password)
-            </div>
-            <div class="editor-label">
-                @Html.CheckBoxFor(u => u.RememberMe)
-                @Html.LabelFor(u => u.RememberMe)
-            </div>
-            <input type="submit" value="Log In"/>
-        </fieldset>
+    <div align="center">
+        @*<img alt="" src="../../Content/images/object1899813962.png" align="middle" vspace="10%" />
+        <img alt="" src="../../Content/images/object607826469.png" align="middle" />*@
+        <div id='fil'>
+        </div>
     </div>
+    
 }
+<script>
+    Ext.Loader.setConfig({ enabled: true });
+    Ext.Loader.setPath('Ext.ux', '@Url.Content("~/Scripts/extjs/ux")');
+    Ext.require(['*']);
+    Ext.QuickTips.init();
+    var url = '@Url.Action("Login", "User")';
+    var formlogin = Ext.create('Ext.form.Panel', {
+        //title: 'Contact Info',
+        //width: 300,
+        id: 'form1',
+        bodyPadding: 10,
+        items: [
+        {
+            xtype: 'textfield',
+            id: 'username',
+            name: 'UserName',
+            fieldLabel: 'Username',
+            allowBlank: false  // requires a non-empty value
+        }, {
+            xtype: 'textfield',
+            id: 'password',
+            name: 'Password',
+            fieldLabel: 'Password',
+            inputType: 'password',
+            allowBlank: false
+        }],
+        buttons: [
+            {
+                iconCls: 'icon-save',
+                text: 'Log in',
+                id: 'conf-button-save',
+                handler: function (btn, evt) {
+
+                    var username = Ext.getCmp('username').getValue(); //.getValue();
+                    var password = Ext.getCmp('password').getValue();
+
+
+                    var form = Ext.getCmp('form1').getForm();
+                    if (form.isValid())
+                    {
+                        form.submit({
+                            url: url
+                                ,
+                                success: function (form, action) {
+                                    //Ext.Msg.alert('Success', action.result.message);
+                                    window.location.href = "@Url.Action("Index", "Home")";
+                                },
+                                failure: function (form, action) {
+                                    Ext.Msg.alert('Failed', action.result ? action.result.message : 'No response');
+                                }
+                            });
+                        } 
+                        else {
+                            Ext.Msg.alert('Data is not valid!', 'กรุณาเลือกข้อมูลให้ครบถ้วน');
+                        }
+                    //                    Ext.Ajax.request({
+                    //                        type: "Post",
+                    //                        cache: false,
+                    //                        async: true,
+                    //                        params: {
+                    //                            username: username,
+                    //                            password: password
+                    //                        },
+                    //                        url: url
+                    //                    });
+
+                    //  me.close();
+                }
+            }]
+    });
+
+    var view = Ext.create('Ext.panel.Panel', {
+        //title: 'Log in',
+        width: '30%',
+        items: formlogin,
+        renderTo: "fil"
+    });
+
+    view.setPosition(0,(Ext.getBody().getViewSize().height / 2));
+
+</script>

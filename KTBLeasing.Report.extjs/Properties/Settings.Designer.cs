@@ -25,15 +25,6 @@ namespace KTBLeasing.Report.extjs.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("221.23.0.25")]
-        public string ServerDatabase {
-            get {
-                return ((string)(this["ServerDatabase"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("sa")]
         public string UsernameDatabase {
             get {
@@ -47,15 +38,6 @@ namespace KTBLeasing.Report.extjs.Properties {
         public string PasswordDatabase {
             get {
                 return ((string)(this["PasswordDatabase"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("BatchTB")]
-        public string Database {
-            get {
-                return ((string)(this["Database"]));
             }
         }
         
@@ -146,6 +128,24 @@ namespace KTBLeasing.Report.extjs.Properties {
         public string CredentialPassword {
             get {
                 return ((string)(this["CredentialPassword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("221.23.4.79")]
+        public string ServerDatabase {
+            get {
+                return ((string)(this["ServerDatabase"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("BatchTB1")]
+        public string Database {
+            get {
+                return ((string)(this["Database"]));
             }
         }
     }

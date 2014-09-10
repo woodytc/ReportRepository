@@ -5,6 +5,7 @@
         var prefix = "ManageReportFrom-";
         me.prefix = prefix;
 
+
         //Define proxy datastore
         var proxyOptions = {
             type: 'ajax',
