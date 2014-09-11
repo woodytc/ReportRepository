@@ -40,7 +40,7 @@
             items: [
                     {
                         xtype: 'panel',
-                        title: 'บริหารจัดการทรัพย์สิน',
+                        title: 'จัดกลุ่มประเภททรัพย์สิน',
                         bodyStyle: 'padding:5px 5px 0',
                         region: 'north',
                         border: true,

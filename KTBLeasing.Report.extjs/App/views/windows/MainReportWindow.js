@@ -27,8 +27,8 @@
         me.trStore = Ext.create('Ext.data.Store', {
             fields: ['name', 'value'],
             data: [
-                    { name: 'T', value: 'T' },
-                    { name: 'R', value: 'R' },
+                    { name: 'Transfer', value: 'T' },
+                    { name: 'Restructor', value: 'R' },
                     { name: 'Not TR', value: '' }
                 ]
         });
@@ -131,7 +131,7 @@
         };
 
         var trFields = {
-            title: 'TR',
+            title: 'สัญญาประเภทโอน',
             hidden: true,
             id: me.prefix + 'trFields',
             xtype: 'fieldset',
@@ -142,12 +142,12 @@
                     { id: prefix + 'TR', name: 'TR', xtype: 'combo', mode: 'local', editable: false, displayField: 'name', valueField: 'value'
                             , queryMode: 'local', allowBlank: false, emptyText: 'selected'
                         , store: me.trStore,
-                        fieldLabel: 'TR', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
+                        fieldLabel: 'สัญญาประเภทโอน', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
                     }
                 ]
         };
         var agrStatusFields = {
-            title: 'Agr Status',
+            title: 'สถานะของสัญญา',
             hidden: true,
             id: me.prefix + 'agrStatusFields',
             xtype: 'fieldset',
@@ -158,7 +158,7 @@
                 { id: prefix + 'AgrStatus', name: 'AgrStatus', xtype: 'combo', mode: 'local', editable: false, displayField: 'Name', valueField: 'AgrStatus'
                         , queryMode: 'local', allowBlank: false, emptyText: 'selected'
                     , store: me.agrStatusStore,
-                    fieldLabel: 'AgrStatus', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
+                    fieldLabel: 'สถานะของสัญญา', afterLabelTextTpl: required, labelStyle: 'text-align: right', width: 500
                 }
             ]
         };
@@ -167,7 +167,7 @@
         var today = '';
         var fromdate = '';
         var cumulativeFields = {
-            title: 'cumulative',
+            title: 'วันที่ทำสัญญา',
             hidden: true,
             id: me.prefix + 'cumulativeFields',
             xtype: 'fieldset',
@@ -177,7 +177,7 @@
             items: [
                 {
                     xtype: 'datefield',
-                    fieldLabel: 'Start Date',
+                    fieldLabel: 'ตั้งแต่',
                     name: 'StartDate',
                     style: 'float: right',
                     afterLabelTextTpl: required, labelStyle: 'text-align: right',
@@ -200,7 +200,7 @@
 				{
 				    xtype: 'datefield',
 
-				    fieldLabel: 'End Date',
+				    fieldLabel: 'ถึง',
 				    style: 'float: right',
 				    afterLabelTextTpl: required, labelStyle: 'text-align: right',
 				    //labelWidth: 50,

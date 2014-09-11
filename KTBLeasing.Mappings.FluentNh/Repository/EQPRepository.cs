@@ -75,7 +75,7 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
             {
                 try
                 {
-                    var result = session.CreateSQLQuery("select * from MasterMappingEQPAndAssetType where EQPCode in (:id) and IsDelete != false")
+                    var result = session.CreateSQLQuery("select * from MasterMappingEQPAndAssetType where EQPCode in (:id) and IsDelete = 0 and AssetID != 11")
                                 .SetParameterList("id", entity).List();
                     
                     if(result.Count == 0)
@@ -83,6 +83,9 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
                         entity.ForEach(x =>
                         {
                             session.Delete(new MasterCodeEQP { EQPCode = x });
+                            session.CreateSQLQuery("delete from MasterMappingEQPAndAssetType where EQPCode = :EQPCode")
+                                .SetInt32("EQPCode", x).ExecuteUpdate();
+                            
                         });
                         ts.Commit();
                         return true;

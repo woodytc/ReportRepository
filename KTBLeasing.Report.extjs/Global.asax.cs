@@ -27,7 +27,7 @@ namespace KTBLeasing.Report.extjs
                 // Route name
                "{controller}/{action}/{id}",
                 // URL with parameters
-               new { controller = "Home", action = "Index", id = "" }
+               new { controller = "User", action = "Index", id = "" }
                 // Parameter defaults
                 );
         }

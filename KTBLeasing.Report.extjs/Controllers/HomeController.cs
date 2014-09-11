@@ -157,6 +157,23 @@ namespace KTBLeasing.ReportWeb.Controllers
                 };
 
                 var status = this.MasterCodeEQPRepository.Insert(_objMasterCodeEQP);
+
+                //x.AssetID = (!string.IsNullOrEmpty(_objMasterCodeEQP.AssetCode.ToString())) ? int.Parse(_objMasterCodeEQP.AssetCode.ToString()) : 0;
+                
+                if (status == true)
+                {
+                    MasterMappingEQPAndAssetType mapEntity = new MasterMappingEQPAndAssetType
+                    {
+                        //ID = x.ID,
+                        AssetID = _objMasterCodeEQP.AssetCode,
+                        EQPCode = _objMasterCodeEQP.EQPCode,
+                        IsDelete = false,
+                        UpdateDate = DateTime.Now,
+                        UpdateUser = User.Identity.Name
+                    };
+                    this.MasterMappingEQPAndAssetTypeRepository.SaveOrUpdate(mapEntity);
+                }
+
                 return Json(new { success = status, message = (status) ? "บันทึกข้อมูลสำเร็จ" : "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
 
             }
@@ -201,8 +218,6 @@ namespace KTBLeasing.ReportWeb.Controllers
 
                 return Json(new { success = false, message = "ไม่สามารถลบข้อมูลได้" }, JsonRequestBehavior.AllowGet);
             }
-
-            return null;
         }
 
         public JsonResult CreateAssetType(FormCollection entity)
@@ -296,7 +311,7 @@ namespace KTBLeasing.ReportWeb.Controllers
         }
         public JsonResult GridAssetType(string Name = "", int start = 0, int limit = 0)
         {
-            var result = this.MasterAssetTypeRepository.Get().Where(x=>x.AssetType.ToLower().Contains(Name.ToLower()));
+            var result = this.MasterAssetTypeRepository.Get().Where(x => x.AssetType.ToLower().Contains(Name.ToLower()) && x.ID != 11);
             var page = (start == 0 && limit == 0) ? result : result.Skip(start).Take(limit);
 
             return Json(new { items = page, total = result.Count() }, JsonRequestBehavior.AllowGet);

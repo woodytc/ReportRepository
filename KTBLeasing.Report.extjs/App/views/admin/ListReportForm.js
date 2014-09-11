@@ -121,7 +121,7 @@
                         var recordSelected = gridpanel.getSelectionModel().getSelection();
                         if (recordSelected.length == 1) {
 
-//                       me.popUpEditItem(gridpanel, recordSelected[0], btn);
+                            me.popUpEditItem(gridpanel, recordSelected[0], btn);
                         }
                     } //end handler
                 }] // end items

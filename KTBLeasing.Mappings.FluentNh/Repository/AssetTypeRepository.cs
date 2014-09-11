@@ -73,7 +73,7 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
             {
                 try
                 {
-                    var result = session.CreateSQLQuery("select * from MasterMappingEQPAndAssetType where AssetID in (:id) and IsDelete != 0")
+                    var result = session.CreateSQLQuery("select * from MasterMappingEQPAndAssetType where AssetID in (:id) and IsDelete = 0")
                                 .SetParameterList("id", entity).List();
 
                     if (result.Count == 0)

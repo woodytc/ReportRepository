@@ -20,6 +20,16 @@
             simpleSortMode: true
         };
 
+        var proxyOptionsCombo = {
+            type: 'ajax',
+            url: window.getMasterAssetType,
+            reader: {
+                type: 'json',
+                root: 'items',
+                totalProperty: 'total'
+            },
+            simpleSortMode: true
+        };
         //Create datastore
         me.gridStore = Ext.create('Ext.data.JsonStore', {
             id: me.prefix + 'gridStore',
@@ -32,7 +42,7 @@
         me.commboboxStore = Ext.create('Ext.data.JsonStore', {
             id: me.prefix + 'comboStore',
             fields: ['name', 'value'],
-            proxy: proxyOptions,
+            proxy: proxyOptionsCombo,
             autoLoad: true
         });
 
@@ -201,7 +211,6 @@ ManageMappingAssetTypeWindow.prototype.display = function (record) {
         });
         store.insert(i, rec);
     }
-   
     //    Ext.getCmp(prefix + "assetType").setValue(record.data.AssetID);
 
 }
