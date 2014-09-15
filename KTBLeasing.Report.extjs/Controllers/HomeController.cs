@@ -155,24 +155,17 @@ namespace KTBLeasing.ReportWeb.Controllers
                     ComID = "1",
                     EQPDescription = EQPDescription
                 };
-
-                var status = this.MasterCodeEQPRepository.Insert(_objMasterCodeEQP);
-
-                //x.AssetID = (!string.IsNullOrEmpty(_objMasterCodeEQP.AssetCode.ToString())) ? int.Parse(_objMasterCodeEQP.AssetCode.ToString()) : 0;
-                
-                if (status == true)
+                MasterMappingEQPAndAssetType mapEntity = new MasterMappingEQPAndAssetType
                 {
-                    MasterMappingEQPAndAssetType mapEntity = new MasterMappingEQPAndAssetType
-                    {
-                        //ID = x.ID,
-                        AssetID = _objMasterCodeEQP.AssetCode,
-                        EQPCode = _objMasterCodeEQP.EQPCode,
-                        IsDelete = false,
-                        UpdateDate = DateTime.Now,
-                        UpdateUser = User.Identity.Name
-                    };
-                    this.MasterMappingEQPAndAssetTypeRepository.SaveOrUpdate(mapEntity);
-                }
+                    //ID = x.ID,
+                    AssetID = _objMasterCodeEQP.AssetCode,
+                    EQPCode = _objMasterCodeEQP.EQPCode,
+                    IsDelete = false,
+                    UpdateDate = DateTime.Now,
+                    UpdateUser = User.Identity.Name
+                };
+
+                var status = this.MasterCodeEQPRepository.Insert(_objMasterCodeEQP, mapEntity);
 
                 return Json(new { success = status, message = (status) ? "บันทึกข้อมูลสำเร็จ" : "ไม่สามารถบันทึกข้อมูลได้" }, JsonRequestBehavior.AllowGet);
 
@@ -231,6 +224,8 @@ namespace KTBLeasing.ReportWeb.Controllers
                 {
                     ID = ID,
                     AssetType = AssetType,
+                    Active = true,
+                    CreateDate = DateTime.Now
                 };
 
                 var status = this.MasterAssetTypeRepository.Insert(_objMasterAssetType);

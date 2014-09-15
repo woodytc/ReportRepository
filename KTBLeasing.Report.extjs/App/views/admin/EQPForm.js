@@ -55,7 +55,7 @@
                                     fieldDefaults: { labelAlign: 'right' },
                                     labelStyle: 'text-align: right',
                                     items: [
-                                            { id: me.prefix + 'Name', name: 'Name', fieldLabel: 'ประเภททรัพย์', labelStyle: 'text-align: right', emptyText: '[ ประเภททรัพย์ ]', anchor: '-100' }
+                                            { id: me.prefix + 'Name', name: 'Name', fieldLabel: 'รายการทรัพย์สิน', labelStyle: 'text-align: right', emptyText: '[ ประเภททรัพย์ ]', anchor: '-100' }
                                     ]
                                 }
                         ]//end main item in header

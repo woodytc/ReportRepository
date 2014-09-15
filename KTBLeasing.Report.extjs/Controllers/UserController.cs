@@ -51,13 +51,13 @@ namespace Creating_a_custom_user_login_form.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Login data is incorrect!");
-                    return Json(new { success = false, message = "Login data is incorrect!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, message = "รหัสผ่านไม่ถูกต้อง" }, JsonRequestBehavior.AllowGet);
                 }
             }
             else
             {
                 ModelState.AddModelError("", "Login data is incorrect!");
-                return Json(new { success = false, message = "Login data is incorrect!" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "รหัสผ่านไม่ถูกต้อง" }, JsonRequestBehavior.AllowGet);
             }
 
             //return Json(new { success = false }, JsonRequestBehavior.AllowGet);

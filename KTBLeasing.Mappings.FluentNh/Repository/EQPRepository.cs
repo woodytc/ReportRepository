@@ -30,6 +30,27 @@ namespace KTBLeasing.Mappings.FluentNh.Repository
             }
         }
 
+        public bool Insert(MasterCodeEQP entity, MasterMappingEQPAndAssetType entity2)
+        {
+            using (var session = SessionFactory.OpenStatelessSession())
+            using (var ts = session.BeginTransaction())
+            {
+                try
+                {
+                    session.Insert(entity);
+                    session.Insert(entity2);
+                    ts.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    ts.Rollback();
+                    ts.Dispose();
+                    return false;
+                }
+            }
+        }
+
         public bool Update(MasterCodeEQP entity)
         { 
             using (var session = SessionFactory.OpenSession())

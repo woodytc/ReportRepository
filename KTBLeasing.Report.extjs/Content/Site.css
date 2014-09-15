@@ -12,6 +12,18 @@ body
           user-select: none;
 }
 
+body.webix_full_screen 
+        {
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          user-select: none;
+          /*background-color: #00a3e4;*/
+          /*background-color:White;*/
+          background-image: url(images/bglogo.jpg);
+        }
 /* Styles for basic forms
 -----------------------------------------------------------*/
 

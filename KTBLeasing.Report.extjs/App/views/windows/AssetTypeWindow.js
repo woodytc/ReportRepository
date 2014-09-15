@@ -12,7 +12,7 @@
         //Display
         Ext.apply(me, {
             iconCls: 'icon-details',
-            title: 'AssetType',
+            //title: 'AssetType',
             y: 20,
             resizable: false,
             modal: true,

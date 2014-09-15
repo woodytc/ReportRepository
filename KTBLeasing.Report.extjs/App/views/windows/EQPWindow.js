@@ -12,7 +12,7 @@
         //Display
         Ext.apply(me, {
             iconCls: 'icon-details',
-            title: 'Mapping Asset Type',
+            //title: '',
             y: 20,
             resizable: false,
             modal: true,
