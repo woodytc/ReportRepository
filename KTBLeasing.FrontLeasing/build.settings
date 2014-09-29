@@ -1,0 +1,6 @@
+{
+    "webBuild": {
+        "environment": "production",
+        "publishPath": "D:/_Repository/ReportRepository/KTBLeasing.FrontLeasing"
+    }
+}
